@@ -7,30 +7,32 @@
   <meta name="description" content="医師が栄養設計した機能性アイスクリーム。高齢者、がん患者、妊婦、お子さまの「食べられない」を、おいしく解決します。">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@300;400;500;600;700&family=Noto+Serif+JP:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Serif+JP:wght@400;500;600;700;900&family=Noto+Sans+JP:wght@300;400;500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
-      --color-dark: #1A1A1A;
-      --color-dark-soft: #242424;
-      --color-dark-card: #2A2A2A;
-      --color-cream: #FAF7F2;
-      --color-warm-white: #FEFCF9;
-      --color-text: #1A1A1A;
-      --color-text-light: #7A7570;
-      --color-text-muted: #A8A29E;
-      --color-gold: #C8956C;
-      --color-gold-light: #D4A882;
-      --color-gold-dark: #A87A55;
-      --color-silver: #8B9DAF;
-      --color-onco: #7BAE7F;
-      --color-mama: #D4869C;
-      --color-kids: #E8B44E;
-      --color-border: #E8E2DA;
+      --dark: #0A0A0A;
+      --dark-2: #111111;
+      --dark-3: #1A1A1A;
+      --dark-4: #222222;
+      --cream: #F5F0E8;
+      --cream-2: #EDE7DB;
+      --gold: #C8956C;
+      --gold-light: #D9AD8A;
+      --gold-dark: #A07450;
+      --silver: #8B9DAF;
+      --onco: #7BAE7F;
+      --mama: #D4869C;
+      --kids: #E8B44E;
+      --white-10: rgba(255,255,255,0.10);
+      --white-06: rgba(255,255,255,0.06);
+      --white-03: rgba(255,255,255,0.03);
+      --text-dim: rgba(255,255,255,0.40);
+      --text-muted: rgba(255,255,255,0.55);
+      --ease: cubic-bezier(0.16, 1, 0.3, 1);
+      --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
       --font-sans: 'Noto Sans JP', 'Inter', sans-serif;
       --font-serif: 'Noto Serif JP', serif;
       --font-inter: 'Inter', sans-serif;
-      --max-width: 1200px;
-      --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
     }
 
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -38,36 +40,43 @@
 
     body {
       font-family: var(--font-sans);
-      color: var(--color-text);
-      background: var(--color-warm-white);
+      background: var(--dark);
+      color: #fff;
       line-height: 1.8;
       -webkit-font-smoothing: antialiased;
-      -moz-osx-font-smoothing: grayscale;
       overflow-x: hidden;
     }
 
-    .container {
-      max-width: var(--max-width);
-      margin: 0 auto;
-      padding: 0 32px;
+    /* ── Grain Texture Overlay ── */
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      z-index: 9999;
+      opacity: 0.025;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
+      background-repeat: repeat;
+      background-size: 128px 128px;
     }
 
-    /* ── Reveal Animation ── */
+    .container { max-width: 1280px; margin: 0 auto; padding: 0 48px; }
+
+    /* ── Scroll Reveal ── */
     .reveal {
       opacity: 0;
-      transform: translateY(40px);
-      transition: opacity 0.8s var(--ease-out), transform 0.8s var(--ease-out);
+      transform: translateY(60px);
+      transition: opacity 1s var(--ease), transform 1s var(--ease);
     }
+    .reveal.visible { opacity: 1; transform: translateY(0); }
+    .reveal-d1 { transition-delay: 0.1s; }
+    .reveal-d2 { transition-delay: 0.2s; }
+    .reveal-d3 { transition-delay: 0.3s; }
+    .reveal-d4 { transition-delay: 0.4s; }
+    .reveal-d5 { transition-delay: 0.5s; }
 
-    .reveal.visible {
-      opacity: 1;
-      transform: translateY(0);
-    }
-
-    .reveal-delay-1 { transition-delay: 0.1s; }
-    .reveal-delay-2 { transition-delay: 0.2s; }
-    .reveal-delay-3 { transition-delay: 0.3s; }
-    .reveal-delay-4 { transition-delay: 0.4s; }
+    /* ── Parallax Helper ── */
+    .parallax-wrap { overflow: hidden; position: relative; }
 
     /* ── Header ── */
     header {
@@ -76,505 +85,453 @@
       left: 0;
       right: 0;
       z-index: 100;
-      padding: 0 32px;
-      transition: background 0.4s, backdrop-filter 0.4s, border-color 0.4s;
+      transition: background 0.5s, backdrop-filter 0.5s;
       border-bottom: 1px solid transparent;
     }
-
     header.scrolled {
-      background: rgba(26, 26, 26, 0.85);
-      backdrop-filter: blur(20px);
-      -webkit-backdrop-filter: blur(20px);
-      border-bottom-color: rgba(255,255,255,0.06);
+      background: rgba(10,10,10,0.8);
+      backdrop-filter: blur(24px);
+      -webkit-backdrop-filter: blur(24px);
+      border-bottom-color: var(--white-06);
     }
-
     .header-inner {
-      max-width: var(--max-width);
+      max-width: 1280px;
       margin: 0 auto;
+      padding: 0 48px;
       display: flex;
       align-items: center;
       justify-content: space-between;
-      height: 72px;
+      height: 80px;
     }
-
     .logo {
       font-family: var(--font-serif);
-      font-size: 1.15rem;
+      font-size: 1.1rem;
       font-weight: 600;
       color: #fff;
       text-decoration: none;
-      letter-spacing: 0.1em;
+      letter-spacing: 0.12em;
     }
-
-    .logo span { color: var(--color-gold); }
-
-    nav { display: flex; gap: 36px; align-items: center; }
-
+    .logo span { color: var(--gold); }
+    nav { display: flex; gap: 40px; align-items: center; }
     nav a {
       font-family: var(--font-inter);
-      font-size: 0.8rem;
-      color: rgba(255,255,255,0.55);
+      font-size: 0.72rem;
+      color: var(--text-dim);
       text-decoration: none;
       font-weight: 400;
       transition: color 0.3s;
-      letter-spacing: 0.06em;
+      letter-spacing: 0.12em;
       text-transform: uppercase;
     }
-
     nav a:hover { color: #fff; }
-
     .nav-cta {
-      background: var(--color-gold);
+      background: var(--gold);
       color: #fff !important;
-      padding: 10px 24px;
+      padding: 10px 28px;
       border-radius: 6px;
-      font-size: 0.78rem !important;
       font-weight: 500 !important;
-      letter-spacing: 0.08em !important;
       transition: background 0.3s, transform 0.2s;
     }
+    .nav-cta:hover { background: var(--gold-dark); transform: translateY(-1px); }
 
-    .nav-cta:hover {
-      background: var(--color-gold-dark);
-      transform: translateY(-1px);
-    }
-
-    /* ── Hero (Dark - AG1 Style) ── */
+    /* ── Hero ── */
     .hero {
       min-height: 100vh;
       display: flex;
       align-items: center;
-      background: var(--color-dark);
+      justify-content: center;
       position: relative;
       overflow: hidden;
-      padding: 120px 0 80px;
+      text-align: center;
     }
 
-    .hero::before {
-      content: '';
+    .hero-bg {
       position: absolute;
-      top: -30%;
-      right: -10%;
-      width: 800px;
-      height: 800px;
-      background: radial-gradient(circle, rgba(200,149,108,0.06) 0%, transparent 70%);
+      inset: 0;
+      z-index: 0;
+    }
+
+    .hero-orb {
+      position: absolute;
       border-radius: 50%;
-      pointer-events: none;
+      filter: blur(120px);
+      animation: orbFloat 12s ease-in-out infinite alternate;
     }
 
-    .hero::after {
-      content: '';
-      position: absolute;
-      bottom: -20%;
-      left: -15%;
+    .hero-orb-1 {
       width: 600px;
       height: 600px;
-      background: radial-gradient(circle, rgba(139,157,175,0.04) 0%, transparent 70%);
-      border-radius: 50%;
-      pointer-events: none;
+      background: radial-gradient(circle, rgba(200,149,108,0.12), transparent 70%);
+      top: -10%;
+      right: -5%;
+      animation-delay: 0s;
     }
 
-    .hero-inner {
-      max-width: var(--max-width);
-      margin: 0 auto;
-      padding: 0 32px;
-      display: grid;
-      grid-template-columns: 1.1fr 0.9fr;
-      gap: 80px;
-      align-items: center;
+    .hero-orb-2 {
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(139,157,175,0.08), transparent 70%);
+      bottom: -15%;
+      left: -10%;
+      animation-delay: -4s;
+    }
+
+    .hero-orb-3 {
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(123,174,127,0.06), transparent 70%);
+      top: 40%;
+      left: 50%;
+      transform: translateX(-50%);
+      animation-delay: -8s;
+    }
+
+    @keyframes orbFloat {
+      0% { transform: translate(0, 0) scale(1); }
+      100% { transform: translate(30px, -40px) scale(1.1); }
+    }
+
+    .hero-content {
       position: relative;
       z-index: 1;
+      max-width: 900px;
+      padding: 0 32px;
     }
 
     .hero-eyebrow {
       font-family: var(--font-inter);
-      font-size: 0.72rem;
+      font-size: 0.68rem;
       font-weight: 500;
-      color: var(--color-gold);
-      letter-spacing: 0.2em;
+      color: var(--gold);
+      letter-spacing: 0.3em;
       text-transform: uppercase;
-      margin-bottom: 24px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .hero-eyebrow::before {
-      content: '';
-      width: 32px;
-      height: 1px;
-      background: var(--color-gold);
+      margin-bottom: 32px;
+      opacity: 0;
+      transform: translateY(20px);
+      animation: heroFadeUp 1s 0.3s var(--ease) forwards;
     }
 
     .hero h1 {
       font-family: var(--font-serif);
-      font-size: 3.2rem;
+      font-size: clamp(2.8rem, 6vw, 5rem);
       font-weight: 700;
-      line-height: 1.35;
-      color: #fff;
-      margin-bottom: 28px;
-      letter-spacing: 0.02em;
+      line-height: 1.2;
+      margin-bottom: 32px;
+      opacity: 0;
+      transform: translateY(40px);
+      animation: heroFadeUp 1.2s 0.5s var(--ease) forwards;
     }
 
-    .hero h1 em {
-      font-style: normal;
-      color: var(--color-gold);
+    .hero h1 .gradient-text {
+      background: linear-gradient(135deg, var(--gold-light), var(--gold), var(--gold-dark));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
     }
 
     .hero-sub {
       font-size: 1rem;
-      color: rgba(255,255,255,0.5);
-      line-height: 2;
-      margin-bottom: 48px;
-      max-width: 480px;
+      color: var(--text-dim);
+      line-height: 2.2;
+      margin-bottom: 56px;
       font-weight: 300;
+      max-width: 560px;
+      margin-left: auto;
+      margin-right: auto;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: heroFadeUp 1s 0.8s var(--ease) forwards;
     }
 
-    .hero-cta-group { display: flex; gap: 16px; margin-bottom: 64px; }
+    .hero-cta-group {
+      display: flex;
+      gap: 16px;
+      justify-content: center;
+      opacity: 0;
+      transform: translateY(30px);
+      animation: heroFadeUp 1s 1s var(--ease) forwards;
+    }
 
     .btn-primary {
       display: inline-flex;
       align-items: center;
       gap: 10px;
-      background: var(--color-gold);
+      background: var(--gold);
       color: #fff;
-      font-size: 0.88rem;
+      font-size: 0.85rem;
       font-weight: 500;
-      padding: 16px 36px;
+      padding: 18px 40px;
       border-radius: 6px;
       text-decoration: none;
-      transition: background 0.3s, transform 0.2s, box-shadow 0.3s;
-      letter-spacing: 0.04em;
-    }
-
-    .btn-primary:hover {
-      background: var(--color-gold-dark);
-      transform: translateY(-2px);
-      box-shadow: 0 8px 32px rgba(200,149,108,0.25);
-    }
-
-    .btn-outline {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      border: 1px solid rgba(255,255,255,0.2);
-      color: rgba(255,255,255,0.7);
-      font-size: 0.88rem;
-      font-weight: 400;
-      padding: 16px 36px;
-      border-radius: 6px;
-      text-decoration: none;
-      transition: border-color 0.3s, color 0.3s, transform 0.2s;
-      letter-spacing: 0.04em;
-    }
-
-    .btn-outline:hover {
-      border-color: rgba(255,255,255,0.5);
-      color: #fff;
-      transform: translateY(-2px);
-    }
-
-    .hero-metrics {
-      display: flex;
-      gap: 48px;
-      padding-top: 32px;
-      border-top: 1px solid rgba(255,255,255,0.08);
-    }
-
-    .hero-metric-value {
-      font-family: var(--font-inter);
-      font-size: 2rem;
-      font-weight: 600;
-      color: #fff;
-      display: block;
-      letter-spacing: -0.02em;
-    }
-
-    .hero-metric-label {
-      font-size: 0.72rem;
-      color: rgba(255,255,255,0.35);
-      letter-spacing: 0.05em;
-      margin-top: 4px;
-    }
-
-    .hero-visual {
-      display: flex;
-      justify-content: center;
-      align-items: center;
-    }
-
-    .hero-card-stack {
-      position: relative;
-      width: 100%;
-      max-width: 420px;
-    }
-
-    .hero-product-card {
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 20px;
-      padding: 48px 36px;
-      backdrop-filter: blur(8px);
-      text-align: center;
-      position: relative;
-    }
-
-    .hero-product-card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      border-radius: 20px;
-      padding: 1px;
-      background: linear-gradient(135deg, rgba(200,149,108,0.2), transparent, rgba(139,157,175,0.1));
-      -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-      mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-      -webkit-mask-composite: xor;
-      mask-composite: exclude;
-      pointer-events: none;
-    }
-
-    .hero-ice-icon {
-      font-size: 4.5rem;
-      margin-bottom: 24px;
-      display: block;
-      filter: drop-shadow(0 4px 16px rgba(200,149,108,0.2));
-    }
-
-    .hero-product-card h3 {
-      font-family: var(--font-serif);
-      font-size: 1.2rem;
-      color: #fff;
-      margin-bottom: 10px;
-      font-weight: 500;
-    }
-
-    .hero-product-card p {
-      font-size: 0.82rem;
-      color: rgba(255,255,255,0.45);
-      line-height: 1.7;
-      margin-bottom: 20px;
-    }
-
-    .nutrient-tags {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      justify-content: center;
-    }
-
-    .nutrient-tag {
-      font-family: var(--font-inter);
-      font-size: 0.68rem;
-      font-weight: 500;
-      padding: 5px 14px;
-      border-radius: 4px;
-      background: rgba(200,149,108,0.1);
-      color: var(--color-gold-light);
-      letter-spacing: 0.03em;
-      border: 1px solid rgba(200,149,108,0.15);
-    }
-
-    .hero-float-badge {
-      position: absolute;
-      background: rgba(255,255,255,0.06);
-      border: 1px solid rgba(255,255,255,0.1);
-      backdrop-filter: blur(8px);
-      border-radius: 12px;
-      padding: 12px 18px;
-      font-size: 0.72rem;
-      color: rgba(255,255,255,0.7);
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .hero-float-badge.top-right {
-      top: -20px;
-      right: -32px;
-    }
-
-    .hero-float-badge.bottom-left {
-      bottom: -16px;
-      left: -28px;
-    }
-
-    .float-icon { font-size: 1.1rem; }
-
-    /* ── Trusted / Social Proof ── */
-    .trusted {
-      padding: 64px 0;
-      background: var(--color-dark);
-      border-top: 1px solid rgba(255,255,255,0.04);
-    }
-
-    .trusted-inner {
-      display: flex;
-      align-items: center;
-      gap: 48px;
-      justify-content: center;
-      flex-wrap: wrap;
-    }
-
-    .trusted-label {
-      font-family: var(--font-inter);
-      font-size: 0.68rem;
-      color: rgba(255,255,255,0.25);
-      letter-spacing: 0.15em;
-      text-transform: uppercase;
-      flex-shrink: 0;
-    }
-
-    .trusted-items {
-      display: flex;
-      gap: 40px;
-      align-items: center;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    .trusted-item {
-      font-family: var(--font-inter);
-      font-size: 0.78rem;
-      color: rgba(255,255,255,0.3);
-      letter-spacing: 0.05em;
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      white-space: nowrap;
-    }
-
-    .trusted-dot {
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--color-gold);
-      opacity: 0.5;
-    }
-
-    /* ── Problem Section ── */
-    .problem {
-      padding: 140px 0;
-      background: var(--color-warm-white);
-    }
-
-    .section-eyebrow {
-      font-family: var(--font-inter);
-      font-size: 0.68rem;
-      font-weight: 500;
-      color: var(--color-gold);
-      text-transform: uppercase;
-      letter-spacing: 0.2em;
-      margin-bottom: 16px;
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .section-eyebrow::before {
-      content: '';
-      width: 24px;
-      height: 1px;
-      background: var(--color-gold);
-    }
-
-    .section-title {
-      font-family: var(--font-serif);
-      font-size: 2.4rem;
-      font-weight: 600;
-      line-height: 1.45;
-      margin-bottom: 20px;
-      letter-spacing: 0.01em;
-    }
-
-    .section-desc {
-      font-size: 0.95rem;
-      color: var(--color-text-light);
-      max-width: 580px;
-      line-height: 2;
-      margin-bottom: 64px;
-      font-weight: 300;
-    }
-
-    .problem-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 24px;
-    }
-
-    .problem-card {
-      background: #fff;
-      border-radius: 16px;
-      padding: 36px 28px;
-      border: 1px solid var(--color-border);
-      transition: transform 0.4s var(--ease-out), box-shadow 0.4s var(--ease-out);
+      transition: all 0.4s var(--ease);
+      letter-spacing: 0.06em;
       position: relative;
       overflow: hidden;
     }
 
-    .problem-card::after {
+    .btn-primary::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent);
+      opacity: 0;
+      transition: opacity 0.4s;
+    }
+
+    .btn-primary:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 40px rgba(200,149,108,0.3);
+    }
+
+    .btn-primary:hover::before { opacity: 1; }
+
+    .btn-ghost {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      border: 1px solid var(--white-10);
+      color: var(--text-muted);
+      font-size: 0.85rem;
+      font-weight: 400;
+      padding: 18px 40px;
+      border-radius: 6px;
+      text-decoration: none;
+      transition: all 0.4s var(--ease);
+      letter-spacing: 0.06em;
+    }
+
+    .btn-ghost:hover {
+      border-color: rgba(255,255,255,0.3);
+      color: #fff;
+      transform: translateY(-3px);
+    }
+
+    @keyframes heroFadeUp {
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* ── Scroll Indicator ── */
+    .scroll-indicator {
+      position: absolute;
+      bottom: 48px;
+      left: 50%;
+      transform: translateX(-50%);
+      z-index: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 8px;
+      opacity: 0;
+      animation: heroFadeUp 1s 1.5s var(--ease) forwards;
+    }
+
+    .scroll-indicator span {
+      font-family: var(--font-inter);
+      font-size: 0.6rem;
+      color: var(--text-dim);
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+    }
+
+    .scroll-line {
+      width: 1px;
+      height: 48px;
+      background: linear-gradient(to bottom, var(--gold), transparent);
+      animation: scrollPulse 2s ease-in-out infinite;
+    }
+
+    @keyframes scrollPulse {
+      0%, 100% { opacity: 0.3; transform: scaleY(0.6); }
+      50% { opacity: 1; transform: scaleY(1); }
+    }
+
+    /* ── Metrics Bar ── */
+    .metrics {
+      padding: 80px 0;
+      border-top: 1px solid var(--white-06);
+      border-bottom: 1px solid var(--white-06);
+      background: var(--dark);
+    }
+
+    .metrics-inner {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 40px;
+      text-align: center;
+    }
+
+    .metric {
+      position: relative;
+    }
+
+    .metric::after {
+      content: '';
+      position: absolute;
+      right: 0;
+      top: 10%;
+      height: 80%;
+      width: 1px;
+      background: var(--white-06);
+    }
+
+    .metric:last-child::after { display: none; }
+
+    .metric-value {
+      font-family: var(--font-inter);
+      font-size: 2.8rem;
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      background: linear-gradient(135deg, #fff, rgba(255,255,255,0.6));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      display: block;
+      margin-bottom: 8px;
+    }
+
+    .metric-label {
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+    }
+
+    /* ── Section Shared ── */
+    .section-dark { background: var(--dark); }
+    .section-dark-2 { background: var(--dark-2); }
+    .section-cream { background: var(--cream); color: var(--dark); }
+
+    .section-pad { padding: 160px 0; }
+
+    .eyebrow {
+      font-family: var(--font-inter);
+      font-size: 0.65rem;
+      font-weight: 600;
+      letter-spacing: 0.25em;
+      text-transform: uppercase;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+
+    .eyebrow::before {
+      content: '';
+      width: 40px;
+      height: 1px;
+    }
+
+    .dark-eyebrow { color: var(--gold); }
+    .dark-eyebrow::before { background: var(--gold); }
+    .cream-eyebrow { color: var(--gold-dark); }
+    .cream-eyebrow::before { background: var(--gold-dark); }
+
+    .section-heading {
+      font-family: var(--font-serif);
+      font-size: clamp(2rem, 4vw, 3rem);
+      font-weight: 700;
+      line-height: 1.3;
+      margin-bottom: 24px;
+    }
+
+    .section-lead {
+      font-size: 0.95rem;
+      line-height: 2.2;
+      max-width: 560px;
+      font-weight: 300;
+    }
+
+    .dark-lead { color: var(--text-dim); }
+    .cream-lead { color: #7A7570; }
+
+    /* ── Problem ── */
+    .problem-grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      gap: 2px;
+      margin-top: 80px;
+    }
+
+    .problem-card {
+      background: var(--dark-3);
+      padding: 48px 32px;
+      position: relative;
+      overflow: hidden;
+      transition: background 0.5s var(--ease);
+    }
+
+    .problem-card:hover { background: var(--dark-4); }
+
+    .problem-card::before {
       content: '';
       position: absolute;
       top: 0;
       left: 0;
       right: 0;
-      height: 3px;
-      background: var(--color-gold);
+      height: 2px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
       opacity: 0;
-      transition: opacity 0.3s;
+      transition: opacity 0.5s;
     }
 
-    .problem-card:hover {
-      transform: translateY(-6px);
-      box-shadow: 0 16px 48px rgba(0,0,0,0.06);
+    .problem-card:hover::before { opacity: 1; }
+
+    .problem-icon-wrap {
+      width: 48px;
+      height: 48px;
+      border-radius: 12px;
+      background: rgba(200,149,108,0.08);
+      border: 1px solid rgba(200,149,108,0.12);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      margin-bottom: 28px;
     }
 
-    .problem-card:hover::after { opacity: 1; }
-
-    .problem-icon {
-      font-size: 2rem;
-      margin-bottom: 20px;
-      display: block;
+    .problem-icon-wrap svg {
+      width: 22px;
+      height: 22px;
+      stroke: var(--gold);
+      fill: none;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
     }
 
     .problem-card h4 {
       font-family: var(--font-serif);
-      font-size: 0.95rem;
-      font-weight: 600;
-      margin-bottom: 12px;
-      line-height: 1.5;
+      font-size: 1rem;
+      font-weight: 500;
+      margin-bottom: 16px;
+      color: #fff;
     }
 
-    .problem-card .num {
+    .problem-num {
       font-family: var(--font-inter);
-      font-size: 1.8rem;
-      font-weight: 600;
-      color: var(--color-gold);
+      font-size: 2rem;
+      font-weight: 700;
+      color: var(--gold);
       display: block;
-      margin-bottom: 4px;
+      margin-bottom: 8px;
       letter-spacing: -0.02em;
     }
 
-    .problem-card .unit {
+    .problem-unit {
       font-size: 0.75rem;
-      color: var(--color-text-muted);
-      line-height: 1.6;
+      color: var(--text-dim);
+      line-height: 1.7;
     }
 
-    /* ── Why Ice Section ── */
-    .why-ice {
-      padding: 140px 0;
-      background: var(--color-cream);
-    }
-
-    .why-ice-header {
+    /* ── Why Ice Cream (Cream Section) ── */
+    .why-header {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 80px;
       align-items: end;
-      margin-bottom: 72px;
+      margin-bottom: 80px;
     }
 
-    .why-ice-grid {
+    .evidence-grid {
       display: grid;
       grid-template-columns: repeat(3, 1fr);
       gap: 24px;
@@ -583,174 +540,193 @@
     .evidence-card {
       background: #fff;
       border-radius: 16px;
-      padding: 36px;
-      border: 1px solid var(--color-border);
-      transition: transform 0.4s var(--ease-out), box-shadow 0.4s var(--ease-out);
+      padding: 40px 32px;
+      border: 1px solid #E8E2DA;
+      transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease);
     }
 
     .evidence-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 36px rgba(0,0,0,0.05);
+      transform: translateY(-8px);
+      box-shadow: 0 24px 64px rgba(0,0,0,0.08);
     }
 
-    .evidence-tag {
+    .ev-tag {
       font-family: var(--font-inter);
-      font-size: 0.65rem;
-      font-weight: 600;
-      color: var(--color-onco);
-      background: rgba(123,174,127,0.08);
-      padding: 4px 12px;
+      font-size: 0.6rem;
+      font-weight: 700;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 5px 14px;
       border-radius: 4px;
       display: inline-block;
-      margin-bottom: 16px;
-      letter-spacing: 0.06em;
-      text-transform: uppercase;
+      margin-bottom: 20px;
+      background: rgba(123,174,127,0.08);
+      color: var(--onco);
     }
 
     .evidence-card h4 {
       font-family: var(--font-serif);
-      font-size: 1rem;
+      font-size: 1.05rem;
       font-weight: 600;
-      margin-bottom: 12px;
+      margin-bottom: 14px;
       line-height: 1.5;
+      color: var(--dark);
     }
 
     .evidence-card p {
       font-size: 0.82rem;
-      color: var(--color-text-light);
-      line-height: 1.8;
+      color: #7A7570;
+      line-height: 1.9;
     }
 
-    .evidence-source {
+    .ev-source {
       font-family: var(--font-inter);
-      font-size: 0.68rem;
-      color: var(--color-text-muted);
-      margin-top: 16px;
+      font-size: 0.65rem;
+      color: #A8A29E;
+      margin-top: 20px;
+      padding-top: 16px;
+      border-top: 1px solid #E8E2DA;
       font-style: italic;
-      padding-top: 12px;
-      border-top: 1px solid var(--color-border);
     }
 
-    /* ── Product Lineup ── */
-    .lineup {
-      padding: 140px 0;
-      background: var(--color-warm-white);
+    /* ── Product Lineup (Dark) ── */
+    .lineup-header {
+      text-align: center;
+      margin-bottom: 80px;
     }
 
-    .lineup-header { text-align: center; margin-bottom: 80px; }
-    .lineup-header .section-eyebrow { justify-content: center; }
-    .lineup-header .section-desc { margin-left: auto; margin-right: auto; }
+    .lineup-header .eyebrow { justify-content: center; }
+    .lineup-header .section-lead { margin: 0 auto; }
 
     .lineup-grid {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 20px;
+      gap: 2px;
     }
 
     .product-card {
-      border-radius: 20px;
-      padding: 40px 28px 32px;
+      padding: 48px 32px;
       text-align: center;
-      transition: transform 0.5s var(--ease-out), box-shadow 0.5s var(--ease-out);
       position: relative;
       overflow: hidden;
+      transition: all 0.5s var(--ease);
       cursor: default;
     }
 
-    .product-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 20px 48px rgba(0,0,0,0.08);
+    .product-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      opacity: 0;
+      transition: opacity 0.6s;
     }
 
-    .product-card.silver {
-      background: linear-gradient(175deg, #E8EDF2 0%, #fff 40%);
-      border: 1px solid rgba(139,157,175,0.15);
-    }
+    .product-card:hover::before { opacity: 1; }
 
-    .product-card.onco {
-      background: linear-gradient(175deg, #E5F0E5 0%, #fff 40%);
-      border: 1px solid rgba(123,174,127,0.15);
-    }
+    .product-card.silver { background: var(--dark-3); }
+    .product-card.silver::before { background: linear-gradient(180deg, rgba(139,157,175,0.08) 0%, transparent 60%); }
+    .product-card.onco { background: var(--dark-3); }
+    .product-card.onco::before { background: linear-gradient(180deg, rgba(123,174,127,0.08) 0%, transparent 60%); }
+    .product-card.mama { background: var(--dark-3); }
+    .product-card.mama::before { background: linear-gradient(180deg, rgba(212,134,156,0.08) 0%, transparent 60%); }
+    .product-card.kids { background: var(--dark-3); }
+    .product-card.kids::before { background: linear-gradient(180deg, rgba(232,180,78,0.08) 0%, transparent 60%); }
 
-    .product-card.mama {
-      background: linear-gradient(175deg, #F5E5EB 0%, #fff 40%);
-      border: 1px solid rgba(212,134,156,0.15);
-    }
-
-    .product-card.kids {
-      background: linear-gradient(175deg, #FBF0D9 0%, #fff 40%);
-      border: 1px solid rgba(232,180,78,0.15);
-    }
+    .product-card:hover { transform: translateY(-4px); }
 
     .product-line-tag {
       font-family: var(--font-inter);
-      font-size: 0.62rem;
-      font-weight: 600;
-      letter-spacing: 0.15em;
+      font-size: 0.58rem;
+      font-weight: 700;
+      letter-spacing: 0.2em;
       text-transform: uppercase;
-      padding: 4px 12px;
-      border-radius: 4px;
       display: inline-block;
-      margin-bottom: 20px;
+      margin-bottom: 24px;
+      padding: 5px 16px;
+      border-radius: 4px;
     }
 
-    .silver .product-line-tag { background: rgba(139,157,175,0.12); color: var(--color-silver); }
-    .onco .product-line-tag { background: rgba(123,174,127,0.12); color: var(--color-onco); }
-    .mama .product-line-tag { background: rgba(212,134,156,0.12); color: var(--color-mama); }
-    .kids .product-line-tag { background: rgba(232,180,78,0.12); color: var(--color-kids); }
+    .silver .product-line-tag { background: rgba(139,157,175,0.12); color: var(--silver); }
+    .onco .product-line-tag { background: rgba(123,174,127,0.12); color: var(--onco); }
+    .mama .product-line-tag { background: rgba(212,134,156,0.12); color: var(--mama); }
+    .kids .product-line-tag { background: rgba(232,180,78,0.12); color: var(--kids); }
 
-    .product-emoji { font-size: 3.5rem; margin-bottom: 16px; display: block; }
+    .product-icon {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 24px;
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      position: relative;
+    }
+
+    .silver .product-icon { background: rgba(139,157,175,0.06); border: 1px solid rgba(139,157,175,0.12); }
+    .onco .product-icon { background: rgba(123,174,127,0.06); border: 1px solid rgba(123,174,127,0.12); }
+    .mama .product-icon { background: rgba(212,134,156,0.06); border: 1px solid rgba(212,134,156,0.12); }
+    .kids .product-icon { background: rgba(232,180,78,0.06); border: 1px solid rgba(232,180,78,0.12); }
+
+    .product-icon svg {
+      width: 32px;
+      height: 32px;
+      fill: none;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
+
+    .silver .product-icon svg { stroke: var(--silver); }
+    .onco .product-icon svg { stroke: var(--onco); }
+    .mama .product-icon svg { stroke: var(--mama); }
+    .kids .product-icon svg { stroke: var(--kids); }
 
     .product-name {
       font-family: var(--font-serif);
       font-size: 1.3rem;
       font-weight: 700;
-      margin-bottom: 4px;
+      margin-bottom: 6px;
+      color: #fff;
     }
 
     .product-target {
-      font-size: 0.75rem;
-      color: var(--color-text-muted);
-      margin-bottom: 24px;
+      font-size: 0.72rem;
+      color: var(--text-dim);
+      margin-bottom: 28px;
     }
 
     .product-nutrients {
       list-style: none;
       text-align: left;
-      margin-bottom: 20px;
+      margin-bottom: 24px;
     }
 
     .product-nutrients li {
       font-size: 0.78rem;
-      padding: 7px 0;
-      border-bottom: 1px solid rgba(0,0,0,0.04);
+      padding: 8px 0;
+      border-bottom: 1px solid var(--white-03);
       display: flex;
       justify-content: space-between;
-    }
-
-    .product-nutrients li span:first-child {
-      color: var(--color-text-light);
+      color: var(--text-muted);
     }
 
     .product-nutrients li span:last-child {
       font-family: var(--font-inter);
       font-weight: 600;
-      color: var(--color-text);
+      color: #fff;
     }
 
     .product-flavor {
-      font-size: 0.72rem;
-      color: var(--color-text-muted);
-      background: rgba(0,0,0,0.02);
-      padding: 10px 14px;
+      font-size: 0.68rem;
+      color: var(--text-dim);
+      background: var(--white-03);
+      padding: 10px 16px;
       border-radius: 8px;
+      border: 1px solid var(--white-06);
     }
 
-    /* ── Science Section (Dark) ── */
+    /* ── Science (Dark gradient) ── */
     .science {
-      padding: 140px 0;
-      background: var(--color-dark);
-      color: #fff;
       position: relative;
     }
 
@@ -761,221 +737,160 @@
       left: 0;
       right: 0;
       height: 1px;
-      background: linear-gradient(90deg, transparent, rgba(200,149,108,0.3), transparent);
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
     }
-
-    .science .section-eyebrow { color: var(--color-gold); }
-    .science .section-eyebrow::before { background: var(--color-gold); }
-    .science .section-title { color: #fff; }
-    .science .section-desc { color: rgba(255,255,255,0.45); }
 
     .science-grid {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
-      gap: 20px;
+      gap: 2px;
+      margin-top: 80px;
     }
 
     .science-card {
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 16px;
-      padding: 36px;
-      transition: background 0.3s, border-color 0.3s;
+      background: var(--dark-3);
+      padding: 48px 40px;
+      transition: background 0.5s;
     }
 
-    .science-card:hover {
-      background: rgba(255,255,255,0.05);
-      border-color: rgba(255,255,255,0.1);
-    }
+    .science-card:hover { background: var(--dark-4); }
 
     .grade-badge {
       font-family: var(--font-inter);
-      display: inline-block;
-      font-size: 0.62rem;
+      font-size: 0.58rem;
       font-weight: 700;
-      padding: 4px 12px;
+      padding: 4px 14px;
       border-radius: 4px;
-      margin-bottom: 16px;
-      letter-spacing: 0.08em;
+      display: inline-block;
+      margin-bottom: 20px;
+      letter-spacing: 0.1em;
       text-transform: uppercase;
     }
 
-    .grade-a { background: rgba(123,174,127,0.15); color: #7BAE7F; }
-    .grade-b { background: rgba(139,157,175,0.15); color: #8B9DAF; }
+    .grade-a { background: rgba(123,174,127,0.12); color: var(--onco); }
+    .grade-b { background: rgba(139,157,175,0.12); color: var(--silver); }
 
     .science-card h4 {
       font-family: var(--font-serif);
-      font-size: 1rem;
+      font-size: 1.05rem;
       font-weight: 500;
-      margin-bottom: 10px;
       color: #fff;
+      margin-bottom: 12px;
       line-height: 1.5;
     }
 
     .science-card p {
       font-size: 0.82rem;
-      color: rgba(255,255,255,0.45);
-      line-height: 1.8;
+      color: var(--text-dim);
+      line-height: 1.9;
     }
 
     .science-ref {
       font-family: var(--font-inter);
-      font-size: 0.65rem;
+      font-size: 0.62rem;
       color: rgba(255,255,255,0.2);
-      margin-top: 14px;
+      margin-top: 20px;
+      padding-top: 16px;
+      border-top: 1px solid var(--white-06);
       font-style: italic;
-      padding-top: 12px;
-      border-top: 1px solid rgba(255,255,255,0.05);
     }
 
-    /* ── Doctor / Advisor Section ── */
-    .advisor {
-      padding: 140px 0;
-      background: var(--color-cream);
-    }
-
+    /* ── Advisor (Cream) ── */
     .advisor-inner {
       display: grid;
-      grid-template-columns: 1fr 1.2fr;
-      gap: 80px;
+      grid-template-columns: 0.8fr 1.2fr;
+      gap: 100px;
       align-items: center;
     }
 
     .advisor-photo {
       width: 100%;
-      aspect-ratio: 4/5;
-      background: linear-gradient(135deg, rgba(200,149,108,0.08), rgba(139,157,175,0.08));
-      border-radius: 20px;
+      aspect-ratio: 3/4;
+      background: linear-gradient(135deg, #E8E2DA, #D4CFC5);
+      border-radius: 16px;
       display: flex;
-      align-items: center;
+      align-items: flex-end;
       justify-content: center;
-      border: 1px solid var(--color-border);
-      position: relative;
       overflow: hidden;
+      position: relative;
     }
 
-    .advisor-photo-placeholder {
+    .advisor-photo-inner {
       text-align: center;
-      color: var(--color-text-muted);
+      padding: 40px;
+      color: #A8A29E;
+      font-size: 0.78rem;
     }
 
-    .advisor-photo-placeholder .icon { font-size: 5rem; margin-bottom: 12px; display: block; }
-    .advisor-photo-placeholder p { font-size: 0.78rem; }
+    .advisor-photo-inner svg {
+      width: 64px;
+      height: 64px;
+      stroke: #B8B2A8;
+      fill: none;
+      stroke-width: 1;
+      margin-bottom: 16px;
+      display: block;
+      margin-left: auto;
+      margin-right: auto;
+    }
 
-    .advisor-credentials {
+    .advisor-creds {
       display: flex;
       flex-wrap: wrap;
       gap: 8px;
-      margin-bottom: 28px;
+      margin-bottom: 32px;
     }
 
-    .credential-tag {
+    .cred-tag {
       font-family: var(--font-inter);
-      font-size: 0.65rem;
-      font-weight: 500;
-      padding: 5px 14px;
+      font-size: 0.62rem;
+      font-weight: 600;
+      padding: 5px 16px;
       border-radius: 4px;
-      background: rgba(200,149,108,0.08);
-      color: var(--color-gold-dark);
-      letter-spacing: 0.04em;
-      border: 1px solid rgba(200,149,108,0.12);
+      background: rgba(160,116,80,0.08);
+      color: var(--gold-dark);
+      letter-spacing: 0.06em;
+      border: 1px solid rgba(160,116,80,0.12);
     }
 
     .advisor-name {
       font-family: var(--font-serif);
-      font-size: 1.8rem;
+      font-size: 2rem;
       font-weight: 700;
       margin-bottom: 8px;
+      color: var(--dark);
     }
 
     .advisor-title {
       font-size: 0.85rem;
-      color: var(--color-text-light);
-      margin-bottom: 28px;
+      color: #7A7570;
+      margin-bottom: 36px;
     }
 
     .advisor-quote {
       font-family: var(--font-serif);
       font-size: 1.15rem;
-      line-height: 2;
-      color: var(--color-text);
-      margin-bottom: 32px;
-      padding-left: 20px;
-      border-left: 3px solid var(--color-gold);
+      line-height: 2.2;
+      color: var(--dark);
+      margin-bottom: 36px;
+      padding-left: 24px;
+      border-left: 2px solid var(--gold);
       font-weight: 400;
     }
 
     .advisor-bio {
       font-size: 0.85rem;
-      color: var(--color-text-light);
-      line-height: 1.9;
+      color: #7A7570;
+      line-height: 2;
     }
 
-    /* ── Scenes / Stories ── */
-    .scenes {
-      padding: 140px 0;
-      background: var(--color-warm-white);
-    }
-
-    .scenes-header {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      align-items: end;
-      margin-bottom: 72px;
-    }
-
-    .scene-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-    }
-
-    .scene-card {
-      background: #fff;
-      border-radius: 16px;
-      padding: 36px 28px;
-      border: 1px solid var(--color-border);
-      transition: transform 0.4s var(--ease-out), box-shadow 0.4s var(--ease-out);
-    }
-
-    .scene-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 36px rgba(0,0,0,0.05);
-    }
-
-    .scene-icon {
-      font-size: 2rem;
-      margin-bottom: 20px;
-      display: block;
-    }
-
-    .scene-card h4 {
-      font-family: var(--font-serif);
-      font-size: 0.95rem;
-      font-weight: 600;
-      margin-bottom: 10px;
-      line-height: 1.5;
-    }
-
-    .scene-card p {
-      font-size: 0.82rem;
-      color: var(--color-text-light);
-      line-height: 1.8;
-    }
-
-    /* ── Comparison ── */
-    .comparison {
-      padding: 140px 0;
-      background: var(--color-cream);
-    }
-
-    .comparison-table-wrap {
+    /* ── Comparison (Cream) ── */
+    .comparison-wrap {
       background: #fff;
       border-radius: 16px;
       overflow: hidden;
-      border: 1px solid var(--color-border);
-      box-shadow: 0 4px 24px rgba(0,0,0,0.03);
+      border: 1px solid #E8E2DA;
+      margin-top: 64px;
     }
 
     .comparison-table {
@@ -985,339 +900,273 @@
 
     .comparison-table th,
     .comparison-table td {
-      padding: 16px 20px;
+      padding: 18px 24px;
       font-size: 0.82rem;
       text-align: center;
-      border-bottom: 1px solid var(--color-border);
+      border-bottom: 1px solid #F0EBE4;
     }
 
     .comparison-table th {
-      background: var(--color-cream);
+      background: var(--cream-2);
       font-family: var(--font-inter);
       font-weight: 600;
-      font-size: 0.75rem;
-      letter-spacing: 0.04em;
-      color: var(--color-text-light);
+      font-size: 0.72rem;
+      letter-spacing: 0.06em;
+      color: #7A7570;
+      text-transform: uppercase;
     }
 
     .comparison-table th:first-child,
     .comparison-table td:first-child {
       text-align: left;
       font-weight: 500;
+      color: var(--dark);
     }
 
-    .comparison-table .highlight {
-      background: rgba(200,149,108,0.04);
-    }
-
-    .comparison-table th.highlight {
-      background: rgba(200,149,108,0.08);
-      color: var(--color-gold-dark);
-      font-weight: 700;
-    }
-
+    .comparison-table .hl { background: rgba(200,149,108,0.04); }
+    .comparison-table th.hl { background: rgba(200,149,108,0.1); color: var(--gold-dark); font-weight: 700; }
     .comparison-table tr:last-child td { border-bottom: none; }
-
-    .check { color: var(--color-onco); font-weight: 600; }
+    .check { color: var(--onco); font-weight: 600; }
     .cross { color: #D4D0CC; }
 
-    /* ── Business ── */
-    .business { padding: 140px 0; background: var(--color-warm-white); }
-
-    .business-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 20px;
-    }
-
-    .biz-card {
-      background: #fff;
-      border-radius: 16px;
-      padding: 40px 32px;
-      border: 1px solid var(--color-border);
-      transition: transform 0.4s var(--ease-out), box-shadow 0.4s var(--ease-out);
-    }
-
-    .biz-card:hover {
-      transform: translateY(-4px);
-      box-shadow: 0 12px 36px rgba(0,0,0,0.05);
-    }
-
-    .biz-card h4 {
-      font-family: var(--font-inter);
-      font-size: 0.72rem;
-      font-weight: 600;
-      color: var(--color-text-muted);
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-      margin-bottom: 20px;
-    }
-
-    .biz-num {
-      font-family: var(--font-inter);
-      font-size: 2.4rem;
-      font-weight: 600;
-      color: var(--color-text);
-      letter-spacing: -0.02em;
-    }
-
-    .biz-label {
-      font-size: 0.75rem;
-      color: var(--color-text-muted);
-      margin-bottom: 16px;
-      display: block;
-    }
-
-    .biz-detail {
-      font-size: 0.82rem;
-      color: var(--color-text-light);
-      line-height: 1.8;
-      padding-top: 16px;
-      border-top: 1px solid var(--color-border);
-    }
-
-    /* ── Roadmap ── */
-    .roadmap {
-      padding: 140px 0;
-      background: var(--color-dark);
-      color: #fff;
-    }
-
-    .roadmap .section-eyebrow { color: var(--color-gold); }
-    .roadmap .section-eyebrow::before { background: var(--color-gold); }
-    .roadmap .section-title { color: #fff; }
-    .roadmap .section-desc { color: rgba(255,255,255,0.45); }
-
+    /* ── Roadmap (Dark) ── */
     .roadmap-timeline {
       display: grid;
       grid-template-columns: repeat(4, 1fr);
-      gap: 20px;
-      position: relative;
+      gap: 2px;
+      margin-top: 80px;
     }
 
     .phase {
-      background: rgba(255,255,255,0.03);
-      border: 1px solid rgba(255,255,255,0.06);
-      border-radius: 16px;
-      padding: 32px 24px;
-      transition: background 0.3s, border-color 0.3s;
+      background: var(--dark-3);
+      padding: 40px 28px;
+      transition: background 0.5s;
     }
 
-    .phase:hover {
-      background: rgba(255,255,255,0.05);
-      border-color: rgba(255,255,255,0.1);
-    }
+    .phase:hover { background: var(--dark-4); }
 
     .phase-num {
       font-family: var(--font-inter);
       display: inline-flex;
       align-items: center;
       justify-content: center;
-      width: 32px;
-      height: 32px;
+      width: 36px;
+      height: 36px;
       border-radius: 8px;
-      background: var(--color-gold);
+      background: var(--gold);
       color: #fff;
       font-weight: 700;
-      font-size: 0.78rem;
-      margin-bottom: 20px;
+      font-size: 0.82rem;
+      margin-bottom: 24px;
     }
 
     .phase h4 {
       font-family: var(--font-serif);
-      font-size: 1rem;
+      font-size: 1.05rem;
       font-weight: 500;
-      margin-bottom: 4px;
       color: #fff;
+      margin-bottom: 6px;
     }
 
     .phase-period {
       font-family: var(--font-inter);
-      font-size: 0.68rem;
-      color: var(--color-gold);
+      font-size: 0.65rem;
+      color: var(--gold);
       font-weight: 600;
-      margin-bottom: 16px;
-      letter-spacing: 0.05em;
+      margin-bottom: 20px;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
     }
 
     .phase p {
       font-size: 0.78rem;
-      color: rgba(255,255,255,0.45);
-      line-height: 1.8;
+      color: var(--text-dim);
+      line-height: 1.9;
     }
 
-    /* ── Partner ── */
-    .partner { padding: 140px 0; background: var(--color-warm-white); }
-
-    .partner-inner {
+    /* ── Partnership (Cream) ── */
+    .partner-grid {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 20px;
+      gap: 24px;
+      margin-top: 64px;
     }
 
     .partner-box {
       background: #fff;
       border-radius: 16px;
-      padding: 44px 36px;
-      border: 1px solid var(--color-border);
+      padding: 48px 40px;
+      border: 1px solid #E8E2DA;
     }
 
     .partner-box h4 {
       font-family: var(--font-serif);
       font-size: 1.1rem;
       font-weight: 600;
-      margin-bottom: 28px;
-      padding-bottom: 16px;
-      border-bottom: 2px solid var(--color-gold);
+      margin-bottom: 32px;
+      padding-bottom: 20px;
+      border-bottom: 2px solid var(--gold);
+      color: var(--dark);
     }
 
     .partner-list { list-style: none; }
 
     .partner-list li {
       font-size: 0.85rem;
-      padding: 12px 0;
-      border-bottom: 1px solid rgba(0,0,0,0.04);
+      padding: 14px 0;
+      border-bottom: 1px solid #F0EBE4;
       display: flex;
-      gap: 12px;
+      gap: 14px;
       align-items: flex-start;
-      line-height: 1.6;
+      line-height: 1.7;
+      color: #5A5550;
     }
 
     .partner-list li::before {
       content: '';
-      display: inline-block;
       width: 6px;
       height: 6px;
       border-radius: 50%;
-      background: var(--color-gold);
+      background: var(--gold);
       flex-shrink: 0;
-      margin-top: 9px;
+      margin-top: 10px;
     }
 
-    /* ── CTA (Dual - Kate Farms Pattern) ── */
-    .cta-section {
-      padding: 140px 0;
-      background: linear-gradient(165deg, var(--color-dark) 0%, #2A2420 100%);
-      color: #fff;
+    /* ── CTA ── */
+    .cta {
+      padding: 180px 0;
+      text-align: center;
       position: relative;
       overflow: hidden;
     }
 
-    .cta-section::before {
-      content: '';
+    .cta-bg-orb {
       position: absolute;
-      top: -50%;
-      right: -20%;
-      width: 700px;
-      height: 700px;
-      background: radial-gradient(circle, rgba(200,149,108,0.06) 0%, transparent 60%);
       border-radius: 50%;
+      filter: blur(120px);
+    }
+
+    .cta-bg-orb-1 {
+      width: 500px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(200,149,108,0.1), transparent 70%);
+      top: -20%;
+      right: 10%;
+    }
+
+    .cta-bg-orb-2 {
+      width: 400px;
+      height: 400px;
+      background: radial-gradient(circle, rgba(139,157,175,0.06), transparent 70%);
+      bottom: -20%;
+      left: 10%;
     }
 
     .cta-inner {
-      text-align: center;
       position: relative;
       z-index: 1;
-      max-width: 720px;
+      max-width: 640px;
       margin: 0 auto;
     }
 
-    .cta-section h2 {
+    .cta h2 {
       font-family: var(--font-serif);
-      font-size: 2.2rem;
-      font-weight: 600;
-      margin-bottom: 20px;
-      line-height: 1.5;
+      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+      font-weight: 700;
+      margin-bottom: 24px;
+      line-height: 1.4;
     }
 
-    .cta-section .cta-desc {
-      color: rgba(255,255,255,0.45);
-      margin-bottom: 56px;
+    .cta-desc {
+      color: var(--text-dim);
       font-size: 0.95rem;
-      line-height: 2;
+      line-height: 2.2;
       font-weight: 300;
+      margin-bottom: 64px;
     }
 
-    .cta-dual {
+    .cta-cards {
       display: grid;
       grid-template-columns: 1fr 1fr;
-      gap: 20px;
+      gap: 2px;
     }
 
     .cta-card {
-      background: rgba(255,255,255,0.04);
-      border: 1px solid rgba(255,255,255,0.08);
-      border-radius: 16px;
-      padding: 40px 32px;
+      background: var(--dark-3);
+      padding: 48px 36px;
       text-align: center;
-      transition: background 0.3s, border-color 0.3s;
+      transition: background 0.5s;
     }
 
-    .cta-card:hover {
-      background: rgba(255,255,255,0.06);
-      border-color: rgba(255,255,255,0.12);
+    .cta-card:first-child { border-radius: 16px 0 0 16px; }
+    .cta-card:last-child { border-radius: 0 16px 16px 0; }
+    .cta-card:hover { background: var(--dark-4); }
+
+    .cta-card-icon {
+      width: 48px;
+      height: 48px;
+      margin: 0 auto 20px;
+      border-radius: 12px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: rgba(200,149,108,0.08);
+      border: 1px solid rgba(200,149,108,0.12);
     }
 
-    .cta-card-icon { font-size: 2rem; margin-bottom: 16px; display: block; }
+    .cta-card-icon svg {
+      width: 22px;
+      height: 22px;
+      stroke: var(--gold);
+      fill: none;
+      stroke-width: 1.5;
+      stroke-linecap: round;
+      stroke-linejoin: round;
+    }
 
     .cta-card h3 {
       font-family: var(--font-serif);
-      font-size: 1.1rem;
+      font-size: 1.05rem;
       font-weight: 500;
       margin-bottom: 10px;
       color: #fff;
     }
 
     .cta-card p {
-      font-size: 0.82rem;
-      color: rgba(255,255,255,0.4);
-      line-height: 1.7;
-      margin-bottom: 24px;
+      font-size: 0.78rem;
+      color: var(--text-dim);
+      line-height: 1.8;
+      margin-bottom: 28px;
     }
 
-    .cta-card .btn-cta {
+    .btn-sm {
       display: inline-flex;
       align-items: center;
       gap: 8px;
       padding: 12px 28px;
       border-radius: 6px;
-      font-size: 0.82rem;
+      font-size: 0.78rem;
       font-weight: 500;
       text-decoration: none;
-      transition: all 0.3s;
-      letter-spacing: 0.04em;
+      transition: all 0.4s var(--ease);
+      letter-spacing: 0.06em;
     }
 
-    .btn-cta-primary {
-      background: var(--color-gold);
-      color: #fff;
-    }
-
-    .btn-cta-primary:hover {
-      background: var(--color-gold-dark);
-    }
-
-    .btn-cta-secondary {
-      border: 1px solid rgba(255,255,255,0.2);
-      color: rgba(255,255,255,0.7);
-    }
-
-    .btn-cta-secondary:hover {
-      border-color: rgba(255,255,255,0.4);
-      color: #fff;
-    }
+    .btn-sm-gold { background: var(--gold); color: #fff; }
+    .btn-sm-gold:hover { background: var(--gold-dark); transform: translateY(-2px); }
+    .btn-sm-ghost { border: 1px solid var(--white-10); color: var(--text-muted); }
+    .btn-sm-ghost:hover { border-color: rgba(255,255,255,0.3); color: #fff; transform: translateY(-2px); }
 
     /* ── Footer ── */
     footer {
       padding: 48px 0;
-      background: var(--color-dark);
-      border-top: 1px solid rgba(255,255,255,0.04);
+      border-top: 1px solid var(--white-06);
     }
 
     .footer-inner {
-      max-width: var(--max-width);
+      max-width: 1280px;
       margin: 0 auto;
-      padding: 0 32px;
+      padding: 0 48px;
       display: flex;
       justify-content: space-between;
       align-items: center;
@@ -1325,70 +1174,54 @@
 
     .footer-logo {
       font-family: var(--font-serif);
-      font-size: 0.95rem;
-      color: rgba(255,255,255,0.4);
-      letter-spacing: 0.05em;
+      font-size: 0.9rem;
+      color: var(--text-dim);
+      letter-spacing: 0.08em;
     }
 
     .footer-copy {
       font-family: var(--font-inter);
-      font-size: 0.72rem;
-      color: rgba(255,255,255,0.2);
-      letter-spacing: 0.03em;
+      font-size: 0.65rem;
+      color: rgba(255,255,255,0.15);
+      letter-spacing: 0.05em;
     }
 
     /* ── Responsive ── */
     @media (max-width: 1024px) {
-      .hero h1 { font-size: 2.6rem; }
-      .hero-inner { gap: 48px; }
+      .container { padding: 0 32px; }
+      .header-inner { padding: 0 32px; }
+      .footer-inner { padding: 0 32px; }
     }
 
     @media (max-width: 900px) {
       nav { display: none; }
-
-      .hero-inner { grid-template-columns: 1fr; gap: 48px; }
-      .hero h1 { font-size: 2.2rem; }
-      .hero-card-stack { max-width: 360px; margin: 0 auto; }
-      .hero-float-badge { display: none; }
-      .hero-metrics { gap: 32px; flex-wrap: wrap; }
-
+      .section-pad { padding: 100px 0; }
       .problem-grid { grid-template-columns: repeat(2, 1fr); }
-      .why-ice-header { grid-template-columns: 1fr; gap: 24px; }
-      .why-ice-grid { grid-template-columns: 1fr; }
+      .evidence-grid { grid-template-columns: 1fr; }
       .lineup-grid { grid-template-columns: repeat(2, 1fr); }
       .science-grid { grid-template-columns: 1fr; }
       .advisor-inner { grid-template-columns: 1fr; gap: 48px; }
-      .scenes-header { grid-template-columns: 1fr; gap: 24px; }
-      .scene-grid { grid-template-columns: 1fr; }
-      .business-grid { grid-template-columns: 1fr; }
+      .why-header { grid-template-columns: 1fr; gap: 24px; }
       .roadmap-timeline { grid-template-columns: repeat(2, 1fr); }
-      .partner-inner { grid-template-columns: 1fr; }
-      .cta-dual { grid-template-columns: 1fr; }
-
-      .comparison-table th,
-      .comparison-table td { padding: 12px 10px; font-size: 0.75rem; }
-
-      .section-title { font-size: 1.8rem; }
-      .container { padding: 0 24px; }
+      .partner-grid { grid-template-columns: 1fr; }
+      .cta-cards { grid-template-columns: 1fr; }
+      .cta-card:first-child { border-radius: 16px 16px 0 0; }
+      .cta-card:last-child { border-radius: 0 0 16px 16px; }
+      .metrics-inner { grid-template-columns: repeat(2, 1fr); gap: 32px; }
+      .metric::after { display: none; }
+      .comparison-table th, .comparison-table td { padding: 12px 10px; font-size: 0.72rem; }
     }
 
     @media (max-width: 520px) {
-      .hero { padding: 100px 0 60px; min-height: auto; }
-      .hero h1 { font-size: 1.8rem; }
-      .hero-sub { font-size: 0.9rem; }
-      .hero-cta-group { flex-direction: column; }
-      .hero-metrics { gap: 24px; }
-      .hero-metric-value { font-size: 1.6rem; }
-
-      .section-title { font-size: 1.5rem; }
+      .container { padding: 0 20px; }
+      .hero { min-height: auto; padding: 140px 0 80px; }
+      .hero h1 { font-size: 2rem; }
+      .hero-cta-group { flex-direction: column; align-items: center; }
+      .section-pad { padding: 80px 0; }
       .problem-grid { grid-template-columns: 1fr; }
       .lineup-grid { grid-template-columns: 1fr; }
       .roadmap-timeline { grid-template-columns: 1fr; }
-
-      .trusted-inner { flex-direction: column; gap: 24px; }
-      .trusted-items { gap: 20px; }
-
-      .cta-section h2 { font-size: 1.6rem; }
+      .metrics-inner { grid-template-columns: 1fr; }
     }
   </style>
 </head>
@@ -1410,169 +1243,157 @@
 
   <!-- Hero -->
   <section class="hero">
-    <div class="hero-inner">
-      <div class="hero-content">
-        <div class="hero-eyebrow">Physician-Designed Functional Ice Cream</div>
-        <h1>食べたいのに、<br><em>食べられない</em>を<br>ひとくちで解決する</h1>
-        <p class="hero-sub">
-          サルコペニア予防、化学療法中の栄養補給、つわり中の栄養摂取、<br>
-          お子さまの偏食対策。医師が設計した「ひとくち」で、<br>必要な栄養を届けます。
-        </p>
-        <div class="hero-cta-group">
-          <a href="#contact" class="btn-primary">協業のご相談 &rarr;</a>
-          <a href="#lineup" class="btn-outline">製品を見る</a>
-        </div>
-        <div class="hero-metrics">
-          <div>
-            <span class="hero-metric-value">1,000万+</span>
-            <span class="hero-metric-label">「食べられない」に悩む人々</span>
-          </div>
-          <div>
-            <span class="hero-metric-value">4</span>
-            <span class="hero-metric-label">ライフステージ別シリーズ</span>
-          </div>
-          <div>
-            <span class="hero-metric-value">13</span>
-            <span class="hero-metric-label">エビデンス論文</span>
-          </div>
-        </div>
+    <div class="hero-bg">
+      <div class="hero-orb hero-orb-1"></div>
+      <div class="hero-orb hero-orb-2"></div>
+      <div class="hero-orb hero-orb-3"></div>
+    </div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">Physician-Designed Functional Ice Cream</div>
+      <h1>食べたいのに、<br><span class="gradient-text">食べられない</span>を<br>ひとくちで解決する</h1>
+      <p class="hero-sub">
+        サルコペニア予防、化学療法中の栄養補給、つわり中の栄養摂取、お子さまの偏食対策。
+        医師が設計した「ひとくち」で、必要な栄養を届けます。
+      </p>
+      <div class="hero-cta-group">
+        <a href="#contact" class="btn-primary">協業のご相談 &rarr;</a>
+        <a href="#lineup" class="btn-ghost">製品を見る</a>
       </div>
-      <div class="hero-visual">
-        <div class="hero-card-stack">
-          <div class="hero-product-card">
-            <span class="hero-ice-icon">&#127846;</span>
-            <h3>ひとくちで、必要な栄養を</h3>
-            <p>1個100mlのアイスに、医学的根拠に基づいた栄養を凝縮</p>
-            <div class="nutrient-tags">
-              <span class="nutrient-tag">Protein 15g</span>
-              <span class="nutrient-tag">Leucine 2.5g</span>
-              <span class="nutrient-tag">Vitamin D</span>
-              <span class="nutrient-tag">Calcium</span>
-              <span class="nutrient-tag">E-Rutin</span>
-            </div>
-          </div>
-          <div class="hero-float-badge top-right">
-            <span class="float-icon">&#9881;&#65039;</span>
-            医師が栄養設計
-          </div>
-          <div class="hero-float-badge bottom-left">
-            <span class="float-icon">&#127891;</span>
-            13本のエビデンス
-          </div>
-        </div>
-      </div>
+    </div>
+    <div class="scroll-indicator">
+      <span>Scroll</span>
+      <div class="scroll-line"></div>
     </div>
   </section>
 
-  <!-- Trusted -->
-  <section class="trusted">
+  <!-- Metrics -->
+  <section class="metrics">
     <div class="container">
-      <div class="trusted-inner">
-        <span class="trusted-label">Backed by</span>
-        <div class="trusted-items">
-          <span class="trusted-item"><span class="trusted-dot"></span>ESPEN ガイドライン準拠</span>
-          <span class="trusted-item"><span class="trusted-dot"></span>Cochrane Review エビデンス</span>
-          <span class="trusted-item"><span class="trusted-dot"></span>MASCC/ISOO 推奨グレードA</span>
-          <span class="trusted-item"><span class="trusted-dot"></span>嚥下調整食学会分類2021</span>
+      <div class="metrics-inner">
+        <div class="metric reveal">
+          <span class="metric-value">1,000万+</span>
+          <span class="metric-label">対象患者数</span>
+        </div>
+        <div class="metric reveal reveal-d1">
+          <span class="metric-value">4</span>
+          <span class="metric-label">ライフステージ別シリーズ</span>
+        </div>
+        <div class="metric reveal reveal-d2">
+          <span class="metric-value">13</span>
+          <span class="metric-label">エビデンス論文</span>
+        </div>
+        <div class="metric reveal reveal-d3">
+          <span class="metric-value">Grade A</span>
+          <span class="metric-label">推奨グレード</span>
         </div>
       </div>
     </div>
   </section>
 
   <!-- Problem -->
-  <section class="problem" id="problem">
+  <section class="section-dark section-pad" id="problem">
     <div class="container">
       <div class="reveal">
-        <span class="section-eyebrow">The Problem</span>
-        <h2 class="section-title">「食べられない」は、<br>想像以上に深刻な問題です</h2>
-        <p class="section-desc">
-          高齢者の食欲低下、がん治療の副作用、つわり、子どもの偏食。
+        <div class="eyebrow dark-eyebrow">The Problem</div>
+        <h2 class="section-heading">「食べられない」は、<br>想像以上に深刻な問題です</h2>
+        <p class="section-lead dark-lead">
+          高齢者の食欲低下、がん治療の副作用、つわり、子どもの偏食。<br>
           原因はさまざまでも、「必要な栄養が摂れない」という結果は同じです。
         </p>
       </div>
       <div class="problem-grid">
-        <div class="problem-card reveal reveal-delay-1">
-          <span class="problem-icon">&#128116;</span>
+        <div class="problem-card reveal reveal-d1">
+          <div class="problem-icon-wrap">
+            <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          </div>
           <h4>フレイル・サルコペニア</h4>
-          <span class="num">400-700万人</span>
-          <span class="unit">食欲低下・嚥下困難による低栄養</span>
+          <span class="problem-num">400-700万人</span>
+          <span class="problem-unit">食欲低下・嚥下困難による低栄養</span>
         </div>
-        <div class="problem-card reveal reveal-delay-2">
-          <span class="problem-icon">&#127973;</span>
+        <div class="problem-card reveal reveal-d2">
+          <div class="problem-icon-wrap">
+            <svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+          </div>
           <h4>がん化学療法中</h4>
-          <span class="num">30-56万人/年</span>
-          <span class="unit">悪心・味覚障害による食欲不振</span>
+          <span class="problem-num">30-56万人/年</span>
+          <span class="problem-unit">悪心・味覚障害による食欲不振</span>
         </div>
-        <div class="problem-card reveal reveal-delay-3">
-          <span class="problem-icon">&#129328;</span>
+        <div class="problem-card reveal reveal-d3">
+          <div class="problem-icon-wrap">
+            <svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7z"/></svg>
+          </div>
           <h4>つわり中の妊婦</h4>
-          <span class="num">25-64万人</span>
-          <span class="unit">匂い過敏・食欲消失</span>
+          <span class="problem-num">25-64万人</span>
+          <span class="problem-unit">匂い過敏・食欲消失</span>
         </div>
-        <div class="problem-card reveal reveal-delay-4">
-          <span class="problem-icon">&#128118;</span>
+        <div class="problem-card reveal reveal-d4">
+          <div class="problem-icon-wrap">
+            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+          </div>
           <h4>偏食・少食の子ども</h4>
-          <span class="num">600-900万人</span>
-          <span class="unit">感覚過敏・栄養素の不足</span>
+          <span class="problem-num">600-900万人</span>
+          <span class="problem-unit">感覚過敏・栄養素の不足</span>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Why Ice -->
-  <section class="why-ice" id="why-ice">
+  <!-- Why Ice Cream -->
+  <section class="section-cream section-pad" id="why-ice">
     <div class="container">
-      <div class="why-ice-header reveal">
+      <div class="why-header reveal">
         <div>
-          <span class="section-eyebrow">Why Ice Cream?</span>
-          <h2 class="section-title">なぜ「アイス」なのか</h2>
+          <div class="eyebrow cream-eyebrow">Why Ice Cream?</div>
+          <h2 class="section-heading">なぜ「アイス」なのか</h2>
         </div>
         <div>
-          <p class="section-desc" style="margin-bottom: 0;">
+          <p class="section-lead cream-lead" style="margin-bottom: 0;">
             アイスクリームは単なる嗜好品ではありません。
             嚥下困難者への有用性、化学療法中の口腔保護効果など、
             複数のエビデンスに裏付けられた合理的な選択です。
           </p>
         </div>
       </div>
-      <div class="why-ice-grid">
-        <div class="evidence-card reveal reveal-delay-1">
-          <span class="evidence-tag">Dysphagia Rehab</span>
+      <div class="evidence-grid">
+        <div class="evidence-card reveal reveal-d1">
+          <span class="ev-tag">Dysphagia Rehab</span>
           <h4>口腔内で融解し、安全に嚥下できる</h4>
           <p>アイスは体温で融解し、嚥下調整食コード1j〜2-1相当の性状に変化。嚥下困難者にも安全に栄養を届けられます。</p>
-          <p class="evidence-source">日本摂食嚥下リハビリテーション学会 嚥下調整食学会分類2021</p>
+          <p class="ev-source">日本摂食嚥下リハビリテーション学会 嚥下調整食学会分類2021</p>
         </div>
-        <div class="evidence-card reveal reveal-delay-2">
-          <span class="evidence-tag">Oral Cryotherapy</span>
+        <div class="evidence-card reveal reveal-d2">
+          <span class="ev-tag">Oral Cryotherapy</span>
           <h4>化学療法中の口腔粘膜炎リスクを低減</h4>
           <p>冷却による局所血管収縮が口腔粘膜への薬剤暴露を抑制。粘膜炎リスクを有意に低減（RR 0.56）します。</p>
-          <p class="evidence-source">Cochrane Review / MASCC/ISOO 2019 推奨グレードA</p>
+          <p class="ev-source">Cochrane Review / MASCC/ISOO 2019 推奨グレードA</p>
         </div>
-        <div class="evidence-card reveal reveal-delay-3">
-          <span class="evidence-tag">Salivary Stimulation</span>
+        <div class="evidence-card reveal reveal-d3">
+          <span class="ev-tag">Salivary Stimulation</span>
           <h4>冷感刺激が嚥下反射を改善する</h4>
           <p>10&#8451;以下の冷感刺激は三叉神経-迷走神経反射を介して唾液分泌を促進し、嚥下反射の潜時を短縮します。</p>
-          <p class="evidence-source">Logemann JA. (1995) / Rosenbek JC. et al. (1996)</p>
+          <p class="ev-source">Logemann JA. (1995) / Rosenbek JC. et al. (1996)</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Lineup -->
-  <section class="lineup" id="lineup">
+  <!-- Product Lineup -->
+  <section class="section-dark section-pad" id="lineup">
     <div class="container">
       <div class="lineup-header reveal">
-        <span class="section-eyebrow">Product Lineup</span>
-        <h2 class="section-title">4つのライフステージに、<br>4つの処方を</h2>
-        <p class="section-desc">
+        <div class="eyebrow dark-eyebrow">Product Lineup</div>
+        <h2 class="section-heading">4つのライフステージに、<br>4つの処方を</h2>
+        <p class="section-lead dark-lead">
           同じ「アイス」という形態で、セグメント別に最適化された栄養設計。<br>
           製造ラインを共通化しながら、中の栄養素だけを変えます。
         </p>
       </div>
       <div class="lineup-grid">
-        <div class="product-card silver reveal reveal-delay-1">
+        <div class="product-card silver reveal reveal-d1">
           <span class="product-line-tag">Silver</span>
-          <span class="product-emoji">&#129507;</span>
+          <div class="product-icon">
+            <svg viewBox="0 0 24 24"><path d="M17 18a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V6a6 6 0 0 1 6-6v0a6 6 0 0 1 6 6v0"/><path d="M9 12h6"/><path d="M9 8h6"/></svg>
+          </div>
           <h3 class="product-name">Silver</h3>
           <p class="product-target">サルコペニア予防 / 高齢者</p>
           <ul class="product-nutrients">
@@ -1585,9 +1406,11 @@
           </ul>
           <p class="product-flavor">なめらかジェラート / 抹茶・きなこ・黒ごま</p>
         </div>
-        <div class="product-card onco reveal reveal-delay-2">
+        <div class="product-card onco reveal reveal-d2">
           <span class="product-line-tag">Onco</span>
-          <span class="product-emoji">&#127811;</span>
+          <div class="product-icon">
+            <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+          </div>
           <h3 class="product-name">Onco</h3>
           <p class="product-target">化学療法中 / がん患者</p>
           <ul class="product-nutrients">
@@ -1600,9 +1423,11 @@
           </ul>
           <p class="product-flavor">さっぱり系 / レモン・ミント・ゆず</p>
         </div>
-        <div class="product-card mama reveal reveal-delay-3">
+        <div class="product-card mama reveal reveal-d3">
           <span class="product-line-tag">Mama</span>
-          <span class="product-emoji">&#127800;</span>
+          <div class="product-icon">
+            <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
+          </div>
           <h3 class="product-name">Mama</h3>
           <p class="product-target">つわり中 / 妊婦</p>
           <ul class="product-nutrients">
@@ -1615,9 +1440,11 @@
           </ul>
           <p class="product-flavor">シャーベット系 / グレープフルーツ・梅・レモン</p>
         </div>
-        <div class="product-card kids reveal reveal-delay-4">
+        <div class="product-card kids reveal reveal-d4">
           <span class="product-line-tag">Kids</span>
-          <span class="product-emoji">&#11088;</span>
+          <div class="product-icon">
+            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+          </div>
           <h3 class="product-name">Kids</h3>
           <p class="product-target">偏食・少食 / 子ども</p>
           <ul class="product-nutrients">
@@ -1635,36 +1462,36 @@
   </section>
 
   <!-- Science -->
-  <section class="science" id="science">
+  <section class="section-dark-2 section-pad science" id="science">
     <div class="container">
       <div class="reveal">
-        <span class="section-eyebrow">Evidence</span>
-        <h2 class="section-title">13本のエビデンス論文に基づく<br>栄養設計</h2>
-        <p class="section-desc">
-          すべての栄養素と含有量は、国際的なガイドラインと
+        <div class="eyebrow dark-eyebrow">Evidence</div>
+        <h2 class="section-heading">13本のエビデンス論文に基づく<br>栄養設計</h2>
+        <p class="section-lead dark-lead">
+          すべての栄養素と含有量は、国際的なガイドラインと<br>
           査読付き論文のエビデンスに基づいて設計されています。
         </p>
       </div>
       <div class="science-grid">
-        <div class="science-card reveal reveal-delay-1">
+        <div class="science-card reveal reveal-d1">
           <span class="grade-badge grade-a">Grade A</span>
           <h4>Oral Cryotherapy による口腔粘膜炎予防</h4>
           <p>冷却が化学療法中の口腔粘膜炎発症リスクを有意に低減。アイスの冷却効果がそのまま治療補助に。</p>
           <p class="science-ref">Worthington HV. et al. (2011) Cochrane Review / MASCC/ISOO 2019</p>
         </div>
-        <div class="science-card reveal reveal-delay-2">
+        <div class="science-card reveal reveal-d2">
           <span class="grade-badge grade-a">Grade A</span>
           <h4>高齢者のタンパク質摂取量 1.0-1.2g/kg/日</h4>
           <p>PROT-AGE Study Groupによる系統的レビュー。筋タンパク質合成に必要な1食あたり15-20gを本製品でカバー。</p>
           <p class="science-ref">Bauer J. et al. (2013) JAMDA / Deutz NE. et al. (2014) ESPEN</p>
         </div>
-        <div class="science-card reveal reveal-delay-3">
+        <div class="science-card reveal reveal-d3">
           <span class="grade-badge grade-a">Grade A</span>
           <h4>葉酸による神経管閉鎖障害の予防</h4>
           <p>サプリメント由来の葉酸400&micro;g/日でNTD再発率72%低下。Mama 1個で200&micro;gをカバー。</p>
           <p class="science-ref">MRC Vitamin Study (1991) Lancet / Berry et al. (1999) NEJM</p>
         </div>
-        <div class="science-card reveal reveal-delay-4">
+        <div class="science-card reveal reveal-d4">
           <span class="grade-badge grade-b">Evidence B</span>
           <h4>ロイシン閾値とmTORC1活性化</h4>
           <p>1食あたり2.5-3.0gのロイシンが筋タンパク質合成のmTORC1経路を活性化。Silver に2.5g配合。</p>
@@ -1675,21 +1502,21 @@
   </section>
 
   <!-- Advisor -->
-  <section class="advisor" id="advisor">
+  <section class="section-cream section-pad" id="advisor">
     <div class="container">
       <div class="advisor-inner">
         <div class="advisor-photo reveal">
-          <div class="advisor-photo-placeholder">
-            <span class="icon">&#129468;</span>
+          <div class="advisor-photo-inner">
+            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
             <p>Photo Coming Soon</p>
           </div>
         </div>
         <div class="reveal">
-          <span class="section-eyebrow">Medical Advisor</span>
-          <div class="advisor-credentials">
-            <span class="credential-tag">小児科専門医</span>
-            <span class="credential-tag">医学博士</span>
-            <span class="credential-tag">栄養設計</span>
+          <div class="eyebrow cream-eyebrow">Medical Advisor</div>
+          <div class="advisor-creds">
+            <span class="cred-tag">小児科専門医</span>
+            <span class="cred-tag">医学博士</span>
+            <span class="cred-tag">栄養設計</span>
           </div>
           <h3 class="advisor-name">岡本 賢</h3>
           <p class="advisor-title">小児科医 / ひとくち処方 開発者</p>
@@ -1709,73 +1536,23 @@
     </div>
   </section>
 
-  <!-- Scenes -->
-  <section class="scenes" id="scenes">
-    <div class="container">
-      <div class="scenes-header reveal">
-        <div>
-          <span class="section-eyebrow">Scenes</span>
-          <h2 class="section-title">「ひとくち処方」が<br>届く場面</h2>
-        </div>
-        <div>
-          <p class="section-desc" style="margin-bottom: 0;">
-            食べられないのは、弱さではありません。<br>
-            その瞬間に、そっと寄り添うひとくちを。
-          </p>
-        </div>
-      </div>
-      <div class="scene-grid">
-        <div class="scene-card reveal reveal-delay-1">
-          <span class="scene-icon">&#127769;</span>
-          <h4>つわりで何も受けつけない夜に</h4>
-          <p>匂いの少ないレモンシャーベットで、葉酸とビタミンB6を。赤ちゃんのための栄養を、おいしく。</p>
-        </div>
-        <div class="scene-card reveal reveal-delay-2">
-          <span class="scene-icon">&#127973;</span>
-          <h4>抗がん剤治療の翌日に</h4>
-          <p>口内炎で固形物が食べられない日。冷たいアイスなら痛みが和らぎ、同時に口腔粘膜を守ります。</p>
-        </div>
-        <div class="scene-card reveal reveal-delay-3">
-          <span class="scene-icon">&#128116;</span>
-          <h4>「もう食べられない」と言った日に</h4>
-          <p>食欲がなくても、アイスなら食べてくれる。1個で15gのタンパク質。筋力低下を、おやつで予防。</p>
-        </div>
-        <div class="scene-card reveal reveal-delay-1">
-          <span class="scene-icon">&#128118;</span>
-          <h4>野菜もお肉も嫌いと泣いた日に</h4>
-          <p>チョコ味のアイスの中に、カルシウムと鉄と亜鉛。楽しく食べて、こっそり栄養補給。</p>
-        </div>
-        <div class="scene-card reveal reveal-delay-2">
-          <span class="scene-icon">&#128164;</span>
-          <h4>気力がなくて何も作れない日に</h4>
-          <p>冷凍庫から出すだけ。調理不要で、必要な栄養が摂れる。がんばらなくていい日の味方。</p>
-        </div>
-        <div class="scene-card reveal reveal-delay-3">
-          <span class="scene-icon">&#128591;</span>
-          <h4>退院後の食事が不安なとき</h4>
-          <p>術後で食欲が戻らない。でも栄養は必要。冷凍庫に常備しておける安心感。</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- Comparison -->
-  <section class="comparison" id="comparison">
+  <section class="section-cream section-pad" id="comparison" style="padding-top: 0;">
     <div class="container">
       <div class="reveal">
-        <span class="section-eyebrow">Comparison</span>
-        <h2 class="section-title">既存製品との違い</h2>
-        <p class="section-desc">
-          「医師が設計」「ライフステージ別」「おいしさ」の3つを
+        <div class="eyebrow cream-eyebrow">Comparison</div>
+        <h2 class="section-heading">既存製品との違い</h2>
+        <p class="section-lead cream-lead">
+          「医師が設計」「ライフステージ別」「おいしさ」の3つを<br>
           同時に満たす製品は、まだ存在しません。
         </p>
       </div>
-      <div class="comparison-table-wrap reveal">
+      <div class="comparison-wrap reveal">
         <table class="comparison-table">
           <thead>
             <tr>
               <th></th>
-              <th class="highlight">ひとくち処方</th>
+              <th class="hl">ひとくち処方</th>
               <th>LacuS Me ICE</th>
               <th>明治メイバランス</th>
               <th>pocotein</th>
@@ -1785,7 +1562,7 @@
           <tbody>
             <tr>
               <td>医師監修</td>
-              <td class="highlight"><span class="check">&#10004;</span></td>
+              <td class="hl"><span class="check">&#10004;</span></td>
               <td><span class="cross">&mdash;</span></td>
               <td><span class="cross">&mdash;</span></td>
               <td><span class="cross">&mdash;</span></td>
@@ -1793,7 +1570,7 @@
             </tr>
             <tr>
               <td>ライフステージ別</td>
-              <td class="highlight"><span class="check">&#10004; 4シリーズ</span></td>
+              <td class="hl"><span class="check">&#10004; 4シリーズ</span></td>
               <td>シニアのみ</td>
               <td>医療用のみ</td>
               <td>子どものみ</td>
@@ -1801,7 +1578,7 @@
             </tr>
             <tr>
               <td>嗜好性</td>
-              <td class="highlight"><span class="check">&#10004;</span> アイス</td>
+              <td class="hl"><span class="check">&#10004;</span> アイス</td>
               <td><span class="check">&#10004;</span> アイス</td>
               <td>薬品感</td>
               <td><span class="check">&#10004;</span> アイス</td>
@@ -1809,7 +1586,7 @@
             </tr>
             <tr>
               <td>臨床エビデンス</td>
-              <td class="highlight"><span class="check">&#10004;</span> 13本</td>
+              <td class="hl"><span class="check">&#10004;</span> 13本</td>
               <td>限定的</td>
               <td><span class="check">&#10004;</span></td>
               <td><span class="cross">&mdash;</span></td>
@@ -1817,7 +1594,7 @@
             </tr>
             <tr>
               <td>Eルチン配合</td>
-              <td class="highlight"><span class="check">&#10004;</span></td>
+              <td class="hl"><span class="check">&#10004;</span></td>
               <td><span class="cross">&mdash;</span></td>
               <td><span class="cross">&mdash;</span></td>
               <td><span class="cross">&mdash;</span></td>
@@ -1825,7 +1602,7 @@
             </tr>
             <tr>
               <td>一般流通</td>
-              <td class="highlight"><span class="check">&#10004;</span> 森永連携</td>
+              <td class="hl"><span class="check">&#10004;</span> 森永連携</td>
               <td>施設中心</td>
               <td>医療機関</td>
               <td>EC中心</td>
@@ -1837,84 +1614,53 @@
     </div>
   </section>
 
-  <!-- Business -->
-  <section class="business" id="business">
-    <div class="container">
-      <div class="reveal">
-        <span class="section-eyebrow">Business Model</span>
-        <h2 class="section-title">収益モデル</h2>
-        <p class="section-desc">B2C、B2B、B2Gの3チャネルで、3年目に年商6.6〜10.3億円を見込みます。</p>
-      </div>
-      <div class="business-grid">
-        <div class="biz-card reveal reveal-delay-1">
-          <h4>B2C &mdash; Direct to Consumer</h4>
-          <span class="biz-num">4.2-6.0億円</span>
-          <span class="biz-label">3年目年間売上</span>
-          <p class="biz-detail">コンビニ・ドラッグストア・EC。350-500円/個 &times; 月間10万個。</p>
-        </div>
-        <div class="biz-card reveal reveal-delay-2">
-          <h4>B2B &mdash; Medical Institutions</h4>
-          <span class="biz-num">1.5-2.1億円</span>
-          <span class="biz-label">3年目年間売上</span>
-          <p class="biz-detail">クリニコ営業網を活用。250-350円/個（卸価格）&times; 月間5万個。</p>
-        </div>
-        <div class="biz-card reveal reveal-delay-3">
-          <h4>B2G &mdash; Government Programs</h4>
-          <span class="biz-num">0.3-1.0億円</span>
-          <span class="biz-label">3年目年間売上</span>
-          <p class="biz-detail">フレイル予防モデル事業。1自治体300-1,000万円/年 &times; 10自治体。</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
   <!-- Roadmap -->
-  <section class="roadmap" id="roadmap">
+  <section class="section-dark section-pad" id="roadmap">
     <div class="container">
       <div class="reveal">
-        <span class="section-eyebrow">Roadmap</span>
-        <h2 class="section-title">実行計画</h2>
-        <p class="section-desc">小さく始めて、エビデンスで拡大する。</p>
+        <div class="eyebrow dark-eyebrow">Roadmap</div>
+        <h2 class="section-heading">実行計画</h2>
+        <p class="section-lead dark-lead">小さく始めて、エビデンスで拡大する。</p>
       </div>
       <div class="roadmap-timeline">
-        <div class="phase reveal reveal-delay-1">
+        <div class="phase reveal reveal-d1">
           <span class="phase-num">1</span>
           <h4>臨床実証</h4>
-          <p class="phase-period">0-6 months</p>
+          <p class="phase-period">0-6 Months</p>
           <p>OEM試作品製造。勤務先病院で試食調査（n=50-100）。初期データ取得。森永へアプローチ開始。</p>
         </div>
-        <div class="phase reveal reveal-delay-2">
+        <div class="phase reveal reveal-d2">
           <span class="phase-num">2</span>
           <h4>製品化・初期販売</h4>
-          <p class="phase-period">6-12 months</p>
+          <p class="phase-period">6-12 Months</p>
           <p>Silver先行発売。クリニコ営業網 + Amazon/楽天でD2C。アプリMVP開発。メディア露出。</p>
         </div>
-        <div class="phase reveal reveal-delay-3">
+        <div class="phase reveal reveal-d3">
           <span class="phase-num">3</span>
           <h4>全ライン展開</h4>
-          <p class="phase-period">12-24 months</p>
+          <p class="phase-period">12-24 Months</p>
           <p>Onco/Mama/Kids順次発売。港区フレイル予防モデル事業に共同提案。臨床データ論文化。</p>
         </div>
-        <div class="phase reveal reveal-delay-4">
+        <div class="phase reveal reveal-d4">
           <span class="phase-num">4</span>
           <h4>全国スケール</h4>
-          <p class="phase-period">24-36 months</p>
+          <p class="phase-period">24-36 Months</p>
           <p>100自治体展開。年商10億円。inブランドとの正式コラボ。海外展開調査。</p>
         </div>
       </div>
     </div>
   </section>
 
-  <!-- Partner -->
-  <section class="partner" id="partner">
+  <!-- Partnership -->
+  <section class="section-cream section-pad" id="partner">
     <div class="container">
       <div class="reveal">
-        <span class="section-eyebrow">Partnership</span>
-        <h2 class="section-title">森永グループとの協業で<br>実現する世界</h2>
-        <p class="section-desc">互いに「持っていないもの」を補完し合う、理想的なパートナーシップ。</p>
+        <div class="eyebrow cream-eyebrow">Partnership</div>
+        <h2 class="section-heading">森永グループとの協業で<br>実現する世界</h2>
+        <p class="section-lead cream-lead">互いに「持っていないもの」を補完し合う、理想的なパートナーシップ。</p>
       </div>
-      <div class="partner-inner">
-        <div class="partner-box reveal reveal-delay-1">
+      <div class="partner-grid">
+        <div class="partner-box reveal reveal-d1">
           <h4>岡本先生が提供するもの</h4>
           <ul class="partner-list">
             <li>医師としての栄養処方設計力（全セグメント対応）</li>
@@ -1924,7 +1670,7 @@
             <li>自治体連携の経験（sukusuku-navi実績）</li>
           </ul>
         </div>
-        <div class="partner-box reveal reveal-delay-2">
+        <div class="partner-box reveal reveal-d2">
           <h4>森永グループが提供するもの</h4>
           <ul class="partner-list">
             <li>アイスクリーム製造ライン（年間700-800億円規模の事業基盤）</li>
@@ -1938,27 +1684,33 @@
     </div>
   </section>
 
-  <!-- CTA (Dual - Kate Farms Pattern) -->
-  <section class="cta-section" id="contact">
+  <!-- CTA -->
+  <section class="section-dark cta" id="contact">
+    <div class="cta-bg-orb cta-bg-orb-1"></div>
+    <div class="cta-bg-orb cta-bg-orb-2"></div>
     <div class="container">
       <div class="cta-inner reveal">
-        <span class="section-eyebrow" style="justify-content: center; color: var(--color-gold);">Get Started</span>
+        <div class="eyebrow dark-eyebrow" style="justify-content: center;">Get Started</div>
         <h2>「食べられない」を、<br>一緒に解決しませんか</h2>
         <p class="cta-desc">
           製造パートナー、自治体、医療機関との連携を歓迎します。<br>まずはお気軽にご連絡ください。
         </p>
-        <div class="cta-dual">
+        <div class="cta-cards">
           <div class="cta-card">
-            <span class="cta-card-icon">&#127973;</span>
+            <div class="cta-card-icon">
+              <svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
+            </div>
             <h3>医療関係者・企業の方</h3>
             <p>協業提案、OEM製造、臨床研究の連携について</p>
-            <a href="mailto:contact@hitokuchi-shohou.jp" class="btn-cta btn-cta-primary">お問い合わせ &rarr;</a>
+            <a href="mailto:contact@hitokuchi-shohou.jp" class="btn-sm btn-sm-gold">お問い合わせ &rarr;</a>
           </div>
           <div class="cta-card">
-            <span class="cta-card-icon">&#128587;</span>
+            <div class="cta-card-icon">
+              <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+            </div>
             <h3>患者さん・ご家族の方</h3>
             <p>製品の先行案内、モニター募集のご登録</p>
-            <a href="#" class="btn-cta btn-cta-secondary">事前登録する &rarr;</a>
+            <a href="#" class="btn-sm btn-sm-ghost">事前登録する &rarr;</a>
           </div>
         </div>
       </div>
@@ -1975,8 +1727,10 @@
 
   <script>
     const header = document.getElementById('header');
+    let lastY = 0;
     window.addEventListener('scroll', () => {
-      header.classList.toggle('scrolled', window.scrollY > 20);
+      header.classList.toggle('scrolled', window.scrollY > 40);
+      lastY = window.scrollY;
     });
 
     const observer = new IntersectionObserver((entries) => {
@@ -1985,9 +1739,48 @@
           entry.target.classList.add('visible');
         }
       });
-    }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+    }, { threshold: 0.08, rootMargin: '0px 0px -60px 0px' });
 
     document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    /* Counter animation for metrics */
+    const counterObserver = new IntersectionObserver((entries) => {
+      entries.forEach(entry => {
+        if (entry.isIntersecting) {
+          const el = entry.target;
+          const text = el.textContent;
+          const match = text.match(/^([\d,]+)/);
+          if (match) {
+            const target = parseInt(match[1].replace(/,/g, ''));
+            const suffix = text.replace(match[1], '');
+            let current = 0;
+            const duration = 1500;
+            const start = performance.now();
+            const step = (now) => {
+              const progress = Math.min((now - start) / duration, 1);
+              const eased = 1 - Math.pow(1 - progress, 3);
+              current = Math.floor(target * eased);
+              el.textContent = current.toLocaleString() + suffix;
+              if (progress < 1) requestAnimationFrame(step);
+            };
+            requestAnimationFrame(step);
+          }
+          counterObserver.unobserve(el);
+        }
+      });
+    }, { threshold: 0.5 });
+
+    document.querySelectorAll('.metric-value').forEach(el => counterObserver.observe(el));
+
+    /* Parallax orbs on mousemove */
+    document.addEventListener('mousemove', (e) => {
+      const x = (e.clientX / window.innerWidth - 0.5) * 20;
+      const y = (e.clientY / window.innerHeight - 0.5) * 20;
+      document.querySelectorAll('.hero-orb').forEach((orb, i) => {
+        const factor = (i + 1) * 0.4;
+        orb.style.transform = `translate(${x * factor}px, ${y * factor}px)`;
+      });
+    });
   </script>
 </body>
 </html>
