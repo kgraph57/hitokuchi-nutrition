@@ -7,1780 +7,642 @@
   <meta name="description" content="医師が栄養設計した機能性アイスクリーム。高齢者、がん患者、妊婦、お子さまの「食べられない」を、おいしく解決します。">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&family=Noto+Serif+JP:wght@400;500;600;700;900&family=Noto+Sans+JP:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:ital,opsz,wght@0,14..32,300..900;1,14..32,300..900&family=Noto+Serif+JP:wght@400;500;600;700;900&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --dark: #0A0A0A;
-      --dark-2: #111111;
-      --dark-3: #1A1A1A;
-      --dark-4: #222222;
-      --cream: #F5F0E8;
-      --cream-2: #EDE7DB;
-      --gold: #C8956C;
-      --gold-light: #D9AD8A;
-      --gold-dark: #A07450;
-      --silver: #8B9DAF;
-      --onco: #7BAE7F;
-      --mama: #D4869C;
-      --kids: #E8B44E;
-      --white-10: rgba(255,255,255,0.10);
-      --white-06: rgba(255,255,255,0.06);
-      --white-03: rgba(255,255,255,0.03);
-      --text-dim: rgba(255,255,255,0.40);
-      --text-muted: rgba(255,255,255,0.55);
-      --ease: cubic-bezier(0.16, 1, 0.3, 1);
-      --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
-      --font-sans: 'Noto Sans JP', 'Inter', sans-serif;
-      --font-serif: 'Noto Serif JP', serif;
-      --font-inter: 'Inter', sans-serif;
-    }
-
-    * { margin: 0; padding: 0; box-sizing: border-box; }
-    html { scroll-behavior: smooth; font-size: 16px; }
-
-    body {
-      font-family: var(--font-sans);
-      background: var(--dark);
-      color: #fff;
-      line-height: 1.8;
-      -webkit-font-smoothing: antialiased;
-      overflow-x: hidden;
-    }
-
-    /* ── Grain Texture Overlay ── */
-    body::after {
-      content: '';
-      position: fixed;
-      inset: 0;
-      pointer-events: none;
-      z-index: 9999;
-      opacity: 0.025;
-      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='1'/%3E%3C/svg%3E");
-      background-repeat: repeat;
-      background-size: 128px 128px;
-    }
-
-    .container { max-width: 1280px; margin: 0 auto; padding: 0 48px; }
-
-    /* ── Scroll Reveal ── */
-    .reveal {
-      opacity: 0;
-      transform: translateY(60px);
-      transition: opacity 1s var(--ease), transform 1s var(--ease);
-    }
-    .reveal.visible { opacity: 1; transform: translateY(0); }
-    .reveal-d1 { transition-delay: 0.1s; }
-    .reveal-d2 { transition-delay: 0.2s; }
-    .reveal-d3 { transition-delay: 0.3s; }
-    .reveal-d4 { transition-delay: 0.4s; }
-    .reveal-d5 { transition-delay: 0.5s; }
-
-    /* ── Parallax Helper ── */
-    .parallax-wrap { overflow: hidden; position: relative; }
-
-    /* ── Header ── */
-    header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      z-index: 100;
-      transition: background 0.5s, backdrop-filter 0.5s;
-      border-bottom: 1px solid transparent;
-    }
-    header.scrolled {
-      background: rgba(10,10,10,0.8);
-      backdrop-filter: blur(24px);
-      -webkit-backdrop-filter: blur(24px);
-      border-bottom-color: var(--white-06);
-    }
-    .header-inner {
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 0 48px;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      height: 80px;
-    }
-    .logo {
-      font-family: var(--font-serif);
-      font-size: 1.1rem;
-      font-weight: 600;
-      color: #fff;
-      text-decoration: none;
-      letter-spacing: 0.12em;
-    }
-    .logo span { color: var(--gold); }
-    nav { display: flex; gap: 40px; align-items: center; }
-    nav a {
-      font-family: var(--font-inter);
-      font-size: 0.72rem;
-      color: var(--text-dim);
-      text-decoration: none;
-      font-weight: 400;
-      transition: color 0.3s;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-    }
-    nav a:hover { color: #fff; }
-    .nav-cta {
-      background: var(--gold);
-      color: #fff !important;
-      padding: 10px 28px;
-      border-radius: 6px;
-      font-weight: 500 !important;
-      transition: background 0.3s, transform 0.2s;
-    }
-    .nav-cta:hover { background: var(--gold-dark); transform: translateY(-1px); }
-
-    /* ── Hero ── */
-    .hero {
-      min-height: 100vh;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-      overflow: hidden;
-      text-align: center;
-    }
-
-    .hero-bg {
-      position: absolute;
-      inset: 0;
-      z-index: 0;
-    }
-
-    .hero-orb {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(120px);
-      animation: orbFloat 12s ease-in-out infinite alternate;
-    }
-
-    .hero-orb-1 {
-      width: 600px;
-      height: 600px;
-      background: radial-gradient(circle, rgba(200,149,108,0.12), transparent 70%);
-      top: -10%;
-      right: -5%;
-      animation-delay: 0s;
-    }
-
-    .hero-orb-2 {
-      width: 500px;
-      height: 500px;
-      background: radial-gradient(circle, rgba(139,157,175,0.08), transparent 70%);
-      bottom: -15%;
-      left: -10%;
-      animation-delay: -4s;
-    }
-
-    .hero-orb-3 {
-      width: 400px;
-      height: 400px;
-      background: radial-gradient(circle, rgba(123,174,127,0.06), transparent 70%);
-      top: 40%;
-      left: 50%;
-      transform: translateX(-50%);
-      animation-delay: -8s;
-    }
-
-    @keyframes orbFloat {
-      0% { transform: translate(0, 0) scale(1); }
-      100% { transform: translate(30px, -40px) scale(1.1); }
-    }
-
-    .hero-content {
-      position: relative;
-      z-index: 1;
-      max-width: 900px;
-      padding: 0 32px;
-    }
-
-    .hero-eyebrow {
-      font-family: var(--font-inter);
-      font-size: 0.68rem;
-      font-weight: 500;
-      color: var(--gold);
-      letter-spacing: 0.3em;
-      text-transform: uppercase;
-      margin-bottom: 32px;
-      opacity: 0;
-      transform: translateY(20px);
-      animation: heroFadeUp 1s 0.3s var(--ease) forwards;
-    }
-
-    .hero h1 {
-      font-family: var(--font-serif);
-      font-size: clamp(2.8rem, 6vw, 5rem);
-      font-weight: 700;
-      line-height: 1.2;
-      margin-bottom: 32px;
-      opacity: 0;
-      transform: translateY(40px);
-      animation: heroFadeUp 1.2s 0.5s var(--ease) forwards;
-    }
-
-    .hero h1 .gradient-text {
-      background: linear-gradient(135deg, var(--gold-light), var(--gold), var(--gold-dark));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-    }
-
-    .hero-sub {
-      font-size: 1rem;
-      color: var(--text-dim);
-      line-height: 2.2;
-      margin-bottom: 56px;
-      font-weight: 300;
-      max-width: 560px;
-      margin-left: auto;
-      margin-right: auto;
-      opacity: 0;
-      transform: translateY(30px);
-      animation: heroFadeUp 1s 0.8s var(--ease) forwards;
-    }
-
-    .hero-cta-group {
-      display: flex;
-      gap: 16px;
-      justify-content: center;
-      opacity: 0;
-      transform: translateY(30px);
-      animation: heroFadeUp 1s 1s var(--ease) forwards;
-    }
-
-    .btn-primary {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      background: var(--gold);
-      color: #fff;
-      font-size: 0.85rem;
-      font-weight: 500;
-      padding: 18px 40px;
-      border-radius: 6px;
-      text-decoration: none;
-      transition: all 0.4s var(--ease);
-      letter-spacing: 0.06em;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .btn-primary::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      background: linear-gradient(135deg, rgba(255,255,255,0.15), transparent);
-      opacity: 0;
-      transition: opacity 0.4s;
-    }
-
-    .btn-primary:hover {
-      transform: translateY(-3px);
-      box-shadow: 0 12px 40px rgba(200,149,108,0.3);
-    }
-
-    .btn-primary:hover::before { opacity: 1; }
-
-    .btn-ghost {
-      display: inline-flex;
-      align-items: center;
-      gap: 10px;
-      border: 1px solid var(--white-10);
-      color: var(--text-muted);
-      font-size: 0.85rem;
-      font-weight: 400;
-      padding: 18px 40px;
-      border-radius: 6px;
-      text-decoration: none;
-      transition: all 0.4s var(--ease);
-      letter-spacing: 0.06em;
-    }
-
-    .btn-ghost:hover {
-      border-color: rgba(255,255,255,0.3);
-      color: #fff;
-      transform: translateY(-3px);
-    }
-
-    @keyframes heroFadeUp {
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* ── Scroll Indicator ── */
-    .scroll-indicator {
-      position: absolute;
-      bottom: 48px;
-      left: 50%;
-      transform: translateX(-50%);
-      z-index: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      gap: 8px;
-      opacity: 0;
-      animation: heroFadeUp 1s 1.5s var(--ease) forwards;
-    }
-
-    .scroll-indicator span {
-      font-family: var(--font-inter);
-      font-size: 0.6rem;
-      color: var(--text-dim);
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-    }
-
-    .scroll-line {
-      width: 1px;
-      height: 48px;
-      background: linear-gradient(to bottom, var(--gold), transparent);
-      animation: scrollPulse 2s ease-in-out infinite;
-    }
-
-    @keyframes scrollPulse {
-      0%, 100% { opacity: 0.3; transform: scaleY(0.6); }
-      50% { opacity: 1; transform: scaleY(1); }
-    }
-
-    /* ── Metrics Bar ── */
-    .metrics {
-      padding: 80px 0;
-      border-top: 1px solid var(--white-06);
-      border-bottom: 1px solid var(--white-06);
-      background: var(--dark);
-    }
-
-    .metrics-inner {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 40px;
-      text-align: center;
-    }
-
-    .metric {
-      position: relative;
-    }
-
-    .metric::after {
-      content: '';
-      position: absolute;
-      right: 0;
-      top: 10%;
-      height: 80%;
-      width: 1px;
-      background: var(--white-06);
-    }
-
-    .metric:last-child::after { display: none; }
-
-    .metric-value {
-      font-family: var(--font-inter);
-      font-size: 2.8rem;
-      font-weight: 700;
-      letter-spacing: -0.03em;
-      background: linear-gradient(135deg, #fff, rgba(255,255,255,0.6));
-      -webkit-background-clip: text;
-      -webkit-text-fill-color: transparent;
-      background-clip: text;
-      display: block;
-      margin-bottom: 8px;
-    }
-
-    .metric-label {
-      font-size: 0.72rem;
-      color: var(--text-dim);
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-
-    /* ── Section Shared ── */
-    .section-dark { background: var(--dark); }
-    .section-dark-2 { background: var(--dark-2); }
-    .section-cream { background: var(--cream); color: var(--dark); }
-
-    .section-pad { padding: 160px 0; }
-
-    .eyebrow {
-      font-family: var(--font-inter);
-      font-size: 0.65rem;
-      font-weight: 600;
-      letter-spacing: 0.25em;
-      text-transform: uppercase;
-      margin-bottom: 20px;
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .eyebrow::before {
-      content: '';
-      width: 40px;
-      height: 1px;
-    }
-
-    .dark-eyebrow { color: var(--gold); }
-    .dark-eyebrow::before { background: var(--gold); }
-    .cream-eyebrow { color: var(--gold-dark); }
-    .cream-eyebrow::before { background: var(--gold-dark); }
-
-    .section-heading {
-      font-family: var(--font-serif);
-      font-size: clamp(2rem, 4vw, 3rem);
-      font-weight: 700;
-      line-height: 1.3;
-      margin-bottom: 24px;
-    }
-
-    .section-lead {
-      font-size: 0.95rem;
-      line-height: 2.2;
-      max-width: 560px;
-      font-weight: 300;
-    }
-
-    .dark-lead { color: var(--text-dim); }
-    .cream-lead { color: #7A7570; }
-
-    /* ── Problem ── */
-    .problem-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 2px;
-      margin-top: 80px;
-    }
-
-    .problem-card {
-      background: var(--dark-3);
-      padding: 48px 32px;
-      position: relative;
-      overflow: hidden;
-      transition: background 0.5s var(--ease);
-    }
-
-    .problem-card:hover { background: var(--dark-4); }
-
-    .problem-card::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 2px;
-      background: linear-gradient(90deg, transparent, var(--gold), transparent);
-      opacity: 0;
-      transition: opacity 0.5s;
-    }
-
-    .problem-card:hover::before { opacity: 1; }
-
-    .problem-icon-wrap {
-      width: 48px;
-      height: 48px;
-      border-radius: 12px;
-      background: rgba(200,149,108,0.08);
-      border: 1px solid rgba(200,149,108,0.12);
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      margin-bottom: 28px;
-    }
-
-    .problem-icon-wrap svg {
-      width: 22px;
-      height: 22px;
-      stroke: var(--gold);
-      fill: none;
-      stroke-width: 1.5;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-
-    .problem-card h4 {
-      font-family: var(--font-serif);
-      font-size: 1rem;
-      font-weight: 500;
-      margin-bottom: 16px;
-      color: #fff;
-    }
-
-    .problem-num {
-      font-family: var(--font-inter);
-      font-size: 2rem;
-      font-weight: 700;
-      color: var(--gold);
-      display: block;
-      margin-bottom: 8px;
-      letter-spacing: -0.02em;
-    }
-
-    .problem-unit {
-      font-size: 0.75rem;
-      color: var(--text-dim);
-      line-height: 1.7;
-    }
-
-    /* ── Why Ice Cream (Cream Section) ── */
-    .why-header {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 80px;
-      align-items: end;
-      margin-bottom: 80px;
-    }
-
-    .evidence-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 24px;
-    }
-
-    .evidence-card {
-      background: #fff;
-      border-radius: 16px;
-      padding: 40px 32px;
-      border: 1px solid #E8E2DA;
-      transition: transform 0.5s var(--ease), box-shadow 0.5s var(--ease);
-    }
-
-    .evidence-card:hover {
-      transform: translateY(-8px);
-      box-shadow: 0 24px 64px rgba(0,0,0,0.08);
-    }
-
-    .ev-tag {
-      font-family: var(--font-inter);
-      font-size: 0.6rem;
-      font-weight: 700;
-      letter-spacing: 0.12em;
-      text-transform: uppercase;
-      padding: 5px 14px;
-      border-radius: 4px;
-      display: inline-block;
-      margin-bottom: 20px;
-      background: rgba(123,174,127,0.08);
-      color: var(--onco);
-    }
-
-    .evidence-card h4 {
-      font-family: var(--font-serif);
-      font-size: 1.05rem;
-      font-weight: 600;
-      margin-bottom: 14px;
-      line-height: 1.5;
-      color: var(--dark);
-    }
-
-    .evidence-card p {
-      font-size: 0.82rem;
-      color: #7A7570;
-      line-height: 1.9;
-    }
-
-    .ev-source {
-      font-family: var(--font-inter);
-      font-size: 0.65rem;
-      color: #A8A29E;
-      margin-top: 20px;
-      padding-top: 16px;
-      border-top: 1px solid #E8E2DA;
-      font-style: italic;
-    }
-
-    /* ── Product Lineup (Dark) ── */
-    .lineup-header {
-      text-align: center;
-      margin-bottom: 80px;
-    }
-
-    .lineup-header .eyebrow { justify-content: center; }
-    .lineup-header .section-lead { margin: 0 auto; }
-
-    .lineup-grid {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 2px;
-    }
-
-    .product-card {
-      padding: 48px 32px;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-      transition: all 0.5s var(--ease);
-      cursor: default;
-    }
-
-    .product-card::before {
-      content: '';
-      position: absolute;
-      inset: 0;
-      opacity: 0;
-      transition: opacity 0.6s;
-    }
-
-    .product-card:hover::before { opacity: 1; }
-
-    .product-card.silver { background: var(--dark-3); }
-    .product-card.silver::before { background: linear-gradient(180deg, rgba(139,157,175,0.08) 0%, transparent 60%); }
-    .product-card.onco { background: var(--dark-3); }
-    .product-card.onco::before { background: linear-gradient(180deg, rgba(123,174,127,0.08) 0%, transparent 60%); }
-    .product-card.mama { background: var(--dark-3); }
-    .product-card.mama::before { background: linear-gradient(180deg, rgba(212,134,156,0.08) 0%, transparent 60%); }
-    .product-card.kids { background: var(--dark-3); }
-    .product-card.kids::before { background: linear-gradient(180deg, rgba(232,180,78,0.08) 0%, transparent 60%); }
-
-    .product-card:hover { transform: translateY(-4px); }
-
-    .product-line-tag {
-      font-family: var(--font-inter);
-      font-size: 0.58rem;
-      font-weight: 700;
-      letter-spacing: 0.2em;
-      text-transform: uppercase;
-      display: inline-block;
-      margin-bottom: 24px;
-      padding: 5px 16px;
-      border-radius: 4px;
-    }
-
-    .silver .product-line-tag { background: rgba(139,157,175,0.12); color: var(--silver); }
-    .onco .product-line-tag { background: rgba(123,174,127,0.12); color: var(--onco); }
-    .mama .product-line-tag { background: rgba(212,134,156,0.12); color: var(--mama); }
-    .kids .product-line-tag { background: rgba(232,180,78,0.12); color: var(--kids); }
-
-    .product-icon {
-      width: 80px;
-      height: 80px;
-      margin: 0 auto 24px;
-      border-radius: 50%;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      position: relative;
-    }
-
-    .silver .product-icon { background: rgba(139,157,175,0.06); border: 1px solid rgba(139,157,175,0.12); }
-    .onco .product-icon { background: rgba(123,174,127,0.06); border: 1px solid rgba(123,174,127,0.12); }
-    .mama .product-icon { background: rgba(212,134,156,0.06); border: 1px solid rgba(212,134,156,0.12); }
-    .kids .product-icon { background: rgba(232,180,78,0.06); border: 1px solid rgba(232,180,78,0.12); }
-
-    .product-icon svg {
-      width: 32px;
-      height: 32px;
-      fill: none;
-      stroke-width: 1.5;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-
-    .silver .product-icon svg { stroke: var(--silver); }
-    .onco .product-icon svg { stroke: var(--onco); }
-    .mama .product-icon svg { stroke: var(--mama); }
-    .kids .product-icon svg { stroke: var(--kids); }
-
-    .product-name {
-      font-family: var(--font-serif);
-      font-size: 1.3rem;
-      font-weight: 700;
-      margin-bottom: 6px;
-      color: #fff;
-    }
-
-    .product-target {
-      font-size: 0.72rem;
-      color: var(--text-dim);
-      margin-bottom: 28px;
-    }
-
-    .product-nutrients {
-      list-style: none;
-      text-align: left;
-      margin-bottom: 24px;
-    }
-
-    .product-nutrients li {
-      font-size: 0.78rem;
-      padding: 8px 0;
-      border-bottom: 1px solid var(--white-03);
-      display: flex;
-      justify-content: space-between;
-      color: var(--text-muted);
-    }
-
-    .product-nutrients li span:last-child {
-      font-family: var(--font-inter);
-      font-weight: 600;
-      color: #fff;
-    }
-
-    .product-flavor {
-      font-size: 0.68rem;
-      color: var(--text-dim);
-      background: var(--white-03);
-      padding: 10px 16px;
-      border-radius: 8px;
-      border: 1px solid var(--white-06);
-    }
-
-    /* ── Science (Dark gradient) ── */
-    .science {
-      position: relative;
-    }
-
-    .science::before {
-      content: '';
-      position: absolute;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 1px;
-      background: linear-gradient(90deg, transparent, var(--gold), transparent);
-    }
-
-    .science-grid {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 2px;
-      margin-top: 80px;
-    }
-
-    .science-card {
-      background: var(--dark-3);
-      padding: 48px 40px;
-      transition: background 0.5s;
-    }
-
-    .science-card:hover { background: var(--dark-4); }
-
-    .grade-badge {
-      font-family: var(--font-inter);
-      font-size: 0.58rem;
-      font-weight: 700;
-      padding: 4px 14px;
-      border-radius: 4px;
-      display: inline-block;
-      margin-bottom: 20px;
-      letter-spacing: 0.1em;
-      text-transform: uppercase;
-    }
-
-    .grade-a { background: rgba(123,174,127,0.12); color: var(--onco); }
-    .grade-b { background: rgba(139,157,175,0.12); color: var(--silver); }
-
-    .science-card h4 {
-      font-family: var(--font-serif);
-      font-size: 1.05rem;
-      font-weight: 500;
-      color: #fff;
-      margin-bottom: 12px;
-      line-height: 1.5;
-    }
-
-    .science-card p {
-      font-size: 0.82rem;
-      color: var(--text-dim);
-      line-height: 1.9;
-    }
-
-    .science-ref {
-      font-family: var(--font-inter);
-      font-size: 0.62rem;
-      color: rgba(255,255,255,0.2);
-      margin-top: 20px;
-      padding-top: 16px;
-      border-top: 1px solid var(--white-06);
-      font-style: italic;
-    }
-
-    /* ── Advisor (Cream) ── */
-    .advisor-inner {
-      display: grid;
-      grid-template-columns: 0.8fr 1.2fr;
-      gap: 100px;
-      align-items: center;
-    }
-
-    .advisor-photo {
-      width: 100%;
-      aspect-ratio: 3/4;
-      background: linear-gradient(135deg, #E8E2DA, #D4CFC5);
-      border-radius: 16px;
-      display: flex;
-      align-items: flex-end;
-      justify-content: center;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .advisor-photo-inner {
-      text-align: center;
-      padding: 40px;
-      color: #A8A29E;
-      font-size: 0.78rem;
-    }
-
-    .advisor-photo-inner svg {
-      width: 64px;
-      height: 64px;
-      stroke: #B8B2A8;
-      fill: none;
-      stroke-width: 1;
-      margin-bottom: 16px;
-      display: block;
-      margin-left: auto;
-      margin-right: auto;
-    }
-
-    .advisor-creds {
-      display: flex;
-      flex-wrap: wrap;
-      gap: 8px;
-      margin-bottom: 32px;
-    }
-
-    .cred-tag {
-      font-family: var(--font-inter);
-      font-size: 0.62rem;
-      font-weight: 600;
-      padding: 5px 16px;
-      border-radius: 4px;
-      background: rgba(160,116,80,0.08);
-      color: var(--gold-dark);
-      letter-spacing: 0.06em;
-      border: 1px solid rgba(160,116,80,0.12);
-    }
-
-    .advisor-name {
-      font-family: var(--font-serif);
-      font-size: 2rem;
-      font-weight: 700;
-      margin-bottom: 8px;
-      color: var(--dark);
-    }
-
-    .advisor-title {
-      font-size: 0.85rem;
-      color: #7A7570;
-      margin-bottom: 36px;
-    }
-
-    .advisor-quote {
-      font-family: var(--font-serif);
-      font-size: 1.15rem;
-      line-height: 2.2;
-      color: var(--dark);
-      margin-bottom: 36px;
-      padding-left: 24px;
-      border-left: 2px solid var(--gold);
-      font-weight: 400;
-    }
-
-    .advisor-bio {
-      font-size: 0.85rem;
-      color: #7A7570;
-      line-height: 2;
-    }
-
-    /* ── Comparison (Cream) ── */
-    .comparison-wrap {
-      background: #fff;
-      border-radius: 16px;
-      overflow: hidden;
-      border: 1px solid #E8E2DA;
-      margin-top: 64px;
-    }
-
-    .comparison-table {
-      width: 100%;
-      border-collapse: collapse;
-    }
-
-    .comparison-table th,
-    .comparison-table td {
-      padding: 18px 24px;
-      font-size: 0.82rem;
-      text-align: center;
-      border-bottom: 1px solid #F0EBE4;
-    }
-
-    .comparison-table th {
-      background: var(--cream-2);
-      font-family: var(--font-inter);
-      font-weight: 600;
-      font-size: 0.72rem;
-      letter-spacing: 0.06em;
-      color: #7A7570;
-      text-transform: uppercase;
-    }
-
-    .comparison-table th:first-child,
-    .comparison-table td:first-child {
-      text-align: left;
-      font-weight: 500;
-      color: var(--dark);
-    }
-
-    .comparison-table .hl { background: rgba(200,149,108,0.04); }
-    .comparison-table th.hl { background: rgba(200,149,108,0.1); color: var(--gold-dark); font-weight: 700; }
-    .comparison-table tr:last-child td { border-bottom: none; }
-    .check { color: var(--onco); font-weight: 600; }
-    .cross { color: #D4D0CC; }
-
-    /* ── Roadmap (Dark) ── */
-    .roadmap-timeline {
-      display: grid;
-      grid-template-columns: repeat(4, 1fr);
-      gap: 2px;
-      margin-top: 80px;
-    }
-
-    .phase {
-      background: var(--dark-3);
-      padding: 40px 28px;
-      transition: background 0.5s;
-    }
-
-    .phase:hover { background: var(--dark-4); }
-
-    .phase-num {
-      font-family: var(--font-inter);
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      width: 36px;
-      height: 36px;
-      border-radius: 8px;
-      background: var(--gold);
-      color: #fff;
-      font-weight: 700;
-      font-size: 0.82rem;
-      margin-bottom: 24px;
-    }
-
-    .phase h4 {
-      font-family: var(--font-serif);
-      font-size: 1.05rem;
-      font-weight: 500;
-      color: #fff;
-      margin-bottom: 6px;
-    }
-
-    .phase-period {
-      font-family: var(--font-inter);
-      font-size: 0.65rem;
-      color: var(--gold);
-      font-weight: 600;
-      margin-bottom: 20px;
-      letter-spacing: 0.08em;
-      text-transform: uppercase;
-    }
-
-    .phase p {
-      font-size: 0.78rem;
-      color: var(--text-dim);
-      line-height: 1.9;
-    }
-
-    /* ── Partnership (Cream) ── */
-    .partner-grid {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 24px;
-      margin-top: 64px;
-    }
-
-    .partner-box {
-      background: #fff;
-      border-radius: 16px;
-      padding: 48px 40px;
-      border: 1px solid #E8E2DA;
-    }
-
-    .partner-box h4 {
-      font-family: var(--font-serif);
-      font-size: 1.1rem;
-      font-weight: 600;
-      margin-bottom: 32px;
-      padding-bottom: 20px;
-      border-bottom: 2px solid var(--gold);
-      color: var(--dark);
-    }
-
-    .partner-list { list-style: none; }
-
-    .partner-list li {
-      font-size: 0.85rem;
-      padding: 14px 0;
-      border-bottom: 1px solid #F0EBE4;
-      display: flex;
-      gap: 14px;
-      align-items: flex-start;
-      line-height: 1.7;
-      color: #5A5550;
-    }
-
-    .partner-list li::before {
-      content: '';
-      width: 6px;
-      height: 6px;
-      border-radius: 50%;
-      background: var(--gold);
-      flex-shrink: 0;
-      margin-top: 10px;
-    }
-
-    /* ── CTA ── */
-    .cta {
-      padding: 180px 0;
-      text-align: center;
-      position: relative;
-      overflow: hidden;
-    }
-
-    .cta-bg-orb {
-      position: absolute;
-      border-radius: 50%;
-      filter: blur(120px);
-    }
-
-    .cta-bg-orb-1 {
-      width: 500px;
-      height: 500px;
-      background: radial-gradient(circle, rgba(200,149,108,0.1), transparent 70%);
-      top: -20%;
-      right: 10%;
-    }
-
-    .cta-bg-orb-2 {
-      width: 400px;
-      height: 400px;
-      background: radial-gradient(circle, rgba(139,157,175,0.06), transparent 70%);
-      bottom: -20%;
-      left: 10%;
-    }
-
-    .cta-inner {
-      position: relative;
-      z-index: 1;
-      max-width: 640px;
-      margin: 0 auto;
-    }
-
-    .cta h2 {
-      font-family: var(--font-serif);
-      font-size: clamp(1.8rem, 3.5vw, 2.6rem);
-      font-weight: 700;
-      margin-bottom: 24px;
-      line-height: 1.4;
-    }
-
-    .cta-desc {
-      color: var(--text-dim);
-      font-size: 0.95rem;
-      line-height: 2.2;
-      font-weight: 300;
-      margin-bottom: 64px;
-    }
-
-    .cta-cards {
-      display: grid;
-      grid-template-columns: 1fr 1fr;
-      gap: 2px;
-    }
-
-    .cta-card {
-      background: var(--dark-3);
-      padding: 48px 36px;
-      text-align: center;
-      transition: background 0.5s;
-    }
-
-    .cta-card:first-child { border-radius: 16px 0 0 16px; }
-    .cta-card:last-child { border-radius: 0 16px 16px 0; }
-    .cta-card:hover { background: var(--dark-4); }
-
-    .cta-card-icon {
-      width: 48px;
-      height: 48px;
-      margin: 0 auto 20px;
-      border-radius: 12px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      background: rgba(200,149,108,0.08);
-      border: 1px solid rgba(200,149,108,0.12);
-    }
-
-    .cta-card-icon svg {
-      width: 22px;
-      height: 22px;
-      stroke: var(--gold);
-      fill: none;
-      stroke-width: 1.5;
-      stroke-linecap: round;
-      stroke-linejoin: round;
-    }
-
-    .cta-card h3 {
-      font-family: var(--font-serif);
-      font-size: 1.05rem;
-      font-weight: 500;
-      margin-bottom: 10px;
-      color: #fff;
-    }
-
-    .cta-card p {
-      font-size: 0.78rem;
-      color: var(--text-dim);
-      line-height: 1.8;
-      margin-bottom: 28px;
-    }
-
-    .btn-sm {
-      display: inline-flex;
-      align-items: center;
-      gap: 8px;
-      padding: 12px 28px;
-      border-radius: 6px;
-      font-size: 0.78rem;
-      font-weight: 500;
-      text-decoration: none;
-      transition: all 0.4s var(--ease);
-      letter-spacing: 0.06em;
-    }
-
-    .btn-sm-gold { background: var(--gold); color: #fff; }
-    .btn-sm-gold:hover { background: var(--gold-dark); transform: translateY(-2px); }
-    .btn-sm-ghost { border: 1px solid var(--white-10); color: var(--text-muted); }
-    .btn-sm-ghost:hover { border-color: rgba(255,255,255,0.3); color: #fff; transform: translateY(-2px); }
-
-    /* ── Footer ── */
-    footer {
-      padding: 48px 0;
-      border-top: 1px solid var(--white-06);
-    }
-
-    .footer-inner {
-      max-width: 1280px;
-      margin: 0 auto;
-      padding: 0 48px;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    .footer-logo {
-      font-family: var(--font-serif);
-      font-size: 0.9rem;
-      color: var(--text-dim);
-      letter-spacing: 0.08em;
-    }
-
-    .footer-copy {
-      font-family: var(--font-inter);
-      font-size: 0.65rem;
-      color: rgba(255,255,255,0.15);
-      letter-spacing: 0.05em;
-    }
-
-    /* ── Responsive ── */
-    @media (max-width: 1024px) {
-      .container { padding: 0 32px; }
-      .header-inner { padding: 0 32px; }
-      .footer-inner { padding: 0 32px; }
-    }
-
-    @media (max-width: 900px) {
-      nav { display: none; }
-      .section-pad { padding: 100px 0; }
-      .problem-grid { grid-template-columns: repeat(2, 1fr); }
-      .evidence-grid { grid-template-columns: 1fr; }
-      .lineup-grid { grid-template-columns: repeat(2, 1fr); }
-      .science-grid { grid-template-columns: 1fr; }
-      .advisor-inner { grid-template-columns: 1fr; gap: 48px; }
-      .why-header { grid-template-columns: 1fr; gap: 24px; }
-      .roadmap-timeline { grid-template-columns: repeat(2, 1fr); }
-      .partner-grid { grid-template-columns: 1fr; }
-      .cta-cards { grid-template-columns: 1fr; }
-      .cta-card:first-child { border-radius: 16px 16px 0 0; }
-      .cta-card:last-child { border-radius: 0 0 16px 16px; }
-      .metrics-inner { grid-template-columns: repeat(2, 1fr); gap: 32px; }
-      .metric::after { display: none; }
-      .comparison-table th, .comparison-table td { padding: 12px 10px; font-size: 0.72rem; }
-    }
-
-    @media (max-width: 520px) {
-      .container { padding: 0 20px; }
-      .hero { min-height: auto; padding: 140px 0 80px; }
-      .hero h1 { font-size: 2rem; }
-      .hero-cta-group { flex-direction: column; align-items: center; }
-      .section-pad { padding: 80px 0; }
-      .problem-grid { grid-template-columns: 1fr; }
-      .lineup-grid { grid-template-columns: 1fr; }
-      .roadmap-timeline { grid-template-columns: 1fr; }
-      .metrics-inner { grid-template-columns: 1fr; }
+    *{margin:0;padding:0;box-sizing:border-box}
+    :root{
+      --bg:#08080A;--bg2:#0E0E11;--bg3:#141418;--bg4:#1C1C22;
+      --surface:rgba(255,255,255,0.03);--border:rgba(255,255,255,0.06);
+      --gold:#C49A6C;--gold-l:#DBBB96;--gold-d:#9E7A50;
+      --silver:#94A3B8;--green:#6EAA72;--rose:#C97B90;--amber:#D4A03C;
+      --t1:#fff;--t2:rgba(255,255,255,0.60);--t3:rgba(255,255,255,0.35);--t4:rgba(255,255,255,0.18);
+      --serif:'Noto Serif JP',serif;--sans:'Inter',sans-serif;
+      --ease:cubic-bezier(.16,1,.3,1);
+    }
+    html{scroll-behavior:smooth;font-size:16px;scrollbar-width:thin;scrollbar-color:var(--gold-d) var(--bg)}
+    ::-webkit-scrollbar{width:6px}
+    ::-webkit-scrollbar-track{background:var(--bg)}
+    ::-webkit-scrollbar-thumb{background:var(--gold-d);border-radius:3px}
+    body{font-family:var(--sans);background:var(--bg);color:var(--t1);line-height:1.7;-webkit-font-smoothing:antialiased;overflow-x:hidden}
+
+    /* noise */
+    body::after{content:'';position:fixed;inset:0;pointer-events:none;z-index:9999;opacity:.018;background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 200 200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");background-size:150px}
+
+    .w{max-width:1320px;margin:0 auto;padding:0 clamp(20px,4vw,64px)}
+    .reveal{opacity:0;transform:translateY(50px);transition:opacity .9s var(--ease),transform .9s var(--ease)}
+    .reveal.v{opacity:1;transform:none}
+    .d1{transition-delay:.08s}.d2{transition-delay:.16s}.d3{transition-delay:.24s}.d4{transition-delay:.32s}.d5{transition-delay:.4s}
+
+    /* ═══ HEADER ═══ */
+    header{position:fixed;top:0;left:0;right:0;z-index:100;transition:all .5s}
+    header.s{background:rgba(8,8,10,.82);backdrop-filter:blur(32px);-webkit-backdrop-filter:blur(32px);border-bottom:1px solid var(--border)}
+    .h-inner{max-width:1320px;margin:0 auto;padding:0 clamp(20px,4vw,64px);display:flex;align-items:center;justify-content:space-between;height:80px}
+    .logo{font-family:var(--serif);font-size:1.05rem;font-weight:600;color:var(--t1);text-decoration:none;letter-spacing:.12em}
+    .logo b{color:var(--gold)}
+    nav{display:flex;gap:36px;align-items:center}
+    nav a{font-size:.7rem;color:var(--t3);text-decoration:none;font-weight:400;letter-spacing:.14em;text-transform:uppercase;transition:color .3s}
+    nav a:hover{color:var(--t1)}
+    .nav-cta{background:var(--gold);color:var(--bg)!important;padding:10px 26px;border-radius:100px;font-weight:600!important;transition:all .3s}
+    .nav-cta:hover{background:var(--gold-l);transform:translateY(-1px)}
+
+    /* ═══ HERO ═══ */
+    .hero{min-height:100vh;display:flex;align-items:center;justify-content:center;text-align:center;position:relative;overflow:hidden}
+    .hero-mesh{position:absolute;inset:0;z-index:0}
+    .hero-mesh span{position:absolute;border-radius:50%;filter:blur(100px);opacity:0;animation:meshIn 2s var(--ease) forwards}
+    .m1{width:clamp(300px,50vw,700px);height:clamp(300px,50vw,700px);background:radial-gradient(circle,rgba(196,154,108,.1),transparent 70%);top:-15%;right:-8%;animation-delay:.2s}
+    .m2{width:clamp(250px,40vw,550px);height:clamp(250px,40vw,550px);background:radial-gradient(circle,rgba(148,163,184,.07),transparent 70%);bottom:-10%;left:-8%;animation-delay:.5s}
+    .m3{width:clamp(200px,30vw,400px);height:clamp(200px,30vw,400px);background:radial-gradient(circle,rgba(110,170,114,.05),transparent 70%);top:35%;left:45%;animation-delay:.8s}
+    @keyframes meshIn{to{opacity:1}}
+
+    .hero-c{position:relative;z-index:1;max-width:860px;padding:0 24px}
+    .hero-ey{font-size:.65rem;font-weight:500;color:var(--gold);letter-spacing:.35em;text-transform:uppercase;margin-bottom:40px;opacity:0;animation:fadeUp .8s .4s var(--ease) forwards}
+    .hero h1{font-family:var(--serif);font-size:clamp(2.6rem,6.5vw,5.4rem);font-weight:900;line-height:1.15;margin-bottom:36px;opacity:0;animation:fadeUp 1s .6s var(--ease) forwards;letter-spacing:-.02em}
+    .hero h1 i{font-style:normal;background:linear-gradient(135deg,var(--gold-l),var(--gold),var(--gold-d));-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text}
+    .hero-p{font-size:clamp(.88rem,1.2vw,1.05rem);color:var(--t3);line-height:2.1;margin:0 auto 52px;max-width:520px;font-weight:300;opacity:0;animation:fadeUp .8s .9s var(--ease) forwards}
+    .hero-btns{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;opacity:0;animation:fadeUp .8s 1.1s var(--ease) forwards}
+
+    .btn{display:inline-flex;align-items:center;gap:10px;font-size:.82rem;font-weight:500;padding:16px 38px;border-radius:100px;text-decoration:none;letter-spacing:.04em;transition:all .4s var(--ease);position:relative;overflow:hidden}
+    .btn-gold{background:var(--gold);color:var(--bg)}
+    .btn-gold:hover{background:var(--gold-l);transform:translateY(-3px);box-shadow:0 16px 48px rgba(196,154,108,.25)}
+    .btn-ghost{border:1px solid rgba(255,255,255,.12);color:var(--t2)}
+    .btn-ghost:hover{border-color:rgba(255,255,255,.3);color:var(--t1);transform:translateY(-3px)}
+
+    .scroll-cue{position:absolute;bottom:40px;left:50%;transform:translateX(-50%);z-index:1;display:flex;flex-direction:column;align-items:center;gap:10px;opacity:0;animation:fadeUp .8s 1.6s var(--ease) forwards}
+    .scroll-cue span{font-size:.58rem;color:var(--t4);letter-spacing:.25em;text-transform:uppercase}
+    .scroll-line{width:1px;height:40px;background:linear-gradient(to bottom,var(--gold),transparent);animation:pulse 2.5s ease-in-out infinite}
+    @keyframes pulse{0%,100%{opacity:.2;transform:scaleY(.5)}50%{opacity:.8;transform:scaleY(1)}}
+    @keyframes fadeUp{to{opacity:1;transform:translateY(0)}}
+
+    /* ═══ MARQUEE ═══ */
+    .marquee{padding:20px 0;border-top:1px solid var(--border);border-bottom:1px solid var(--border);overflow:hidden;white-space:nowrap}
+    .marquee-track{display:inline-flex;animation:scroll 30s linear infinite}
+    .marquee-item{display:inline-flex;align-items:center;gap:12px;padding:0 40px;font-size:.7rem;color:var(--t4);letter-spacing:.12em;text-transform:uppercase;font-weight:400}
+    .marquee-dot{width:4px;height:4px;border-radius:50%;background:var(--gold);opacity:.5}
+    @keyframes scroll{to{transform:translateX(-50%)}}
+
+    /* ═══ SECTION PRIMITIVES ═══ */
+    .sec{padding:clamp(80px,12vw,180px) 0}
+    .sec-cream{background:var(--cream,#F5F0E8);color:#1A1A1A}
+    :root{--cream:#F5F0E8}
+    .ey{font-size:.6rem;font-weight:600;letter-spacing:.3em;text-transform:uppercase;margin-bottom:20px}
+    .ey-gold{color:var(--gold)}.ey-dark{color:var(--gold-d)}
+    .sh{font-family:var(--serif);font-size:clamp(1.8rem,3.8vw,3.2rem);font-weight:700;line-height:1.25;margin-bottom:24px;letter-spacing:-.01em}
+    .sp{font-size:.92rem;line-height:2.2;max-width:520px;font-weight:300}
+    .sp-dim{color:var(--t3)}.sp-muted{color:#8A857E}
+
+    /* ═══ PROBLEM ═══ */
+    .prob-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin-top:72px;background:var(--border);border-radius:16px;overflow:hidden}
+    .prob-card{background:var(--bg2);padding:44px 32px;transition:background .5s}
+    .prob-card:hover{background:var(--bg3)}
+    .prob-ico{width:40px;height:40px;border-radius:10px;background:rgba(196,154,108,.06);border:1px solid rgba(196,154,108,.1);display:grid;place-items:center;margin-bottom:24px}
+    .prob-ico svg{width:18px;height:18px;stroke:var(--gold);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+    .prob-card h4{font-family:var(--serif);font-size:.92rem;font-weight:500;margin-bottom:14px}
+    .prob-n{font-family:var(--sans);font-size:1.7rem;font-weight:700;color:var(--gold);display:block;margin-bottom:6px;letter-spacing:-.02em}
+    .prob-u{font-size:.72rem;color:var(--t3);line-height:1.6}
+
+    /* ═══ WHY ICE ═══ */
+    .why-top{display:grid;grid-template-columns:1fr 1fr;gap:80px;align-items:end;margin-bottom:72px}
+    .ev-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+    .ev-card{background:#fff;border-radius:14px;padding:40px 32px;border:1px solid #E8E2DA;transition:transform .5s var(--ease),box-shadow .5s var(--ease)}
+    .ev-card:hover{transform:translateY(-6px);box-shadow:0 20px 60px rgba(0,0,0,.07)}
+    .ev-tag{font-size:.58rem;font-weight:700;letter-spacing:.12em;text-transform:uppercase;padding:4px 12px;border-radius:100px;display:inline-block;margin-bottom:18px;background:rgba(110,170,114,.07);color:#5A9A5E}
+    .ev-card h4{font-family:var(--serif);font-size:1rem;font-weight:600;margin-bottom:12px;line-height:1.5;color:#1A1A1A}
+    .ev-card p{font-size:.8rem;color:#8A857E;line-height:1.9}
+    .ev-src{font-size:.62rem;color:#B5AFA7;margin-top:18px;padding-top:14px;border-top:1px solid #E8E2DA;font-style:italic}
+
+    /* ═══ LINEUP ═══ */
+    .lineup-h{text-align:center;margin-bottom:72px}
+    .lineup-scroll{display:flex;gap:20px;overflow-x:auto;scroll-snap-type:x mandatory;-webkit-overflow-scrolling:touch;padding-bottom:20px;scrollbar-width:none}
+    .lineup-scroll::-webkit-scrollbar{display:none}
+    .p-card{min-width:320px;flex-shrink:0;scroll-snap-align:start;border-radius:20px;padding:44px 32px;text-align:center;position:relative;overflow:hidden;transition:transform .5s var(--ease);border:1px solid var(--border);background:var(--bg2)}
+    .p-card:hover{transform:translateY(-6px)}
+    .p-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;transition:opacity .4s;opacity:0}
+    .p-card:hover::before{opacity:1}
+    .p-card.silver::before{background:linear-gradient(90deg,transparent,var(--silver),transparent)}
+    .p-card.onco::before{background:linear-gradient(90deg,transparent,var(--green),transparent)}
+    .p-card.mama::before{background:linear-gradient(90deg,transparent,var(--rose),transparent)}
+    .p-card.kids::before{background:linear-gradient(90deg,transparent,var(--amber),transparent)}
+
+    .p-tag{font-size:.55rem;font-weight:700;letter-spacing:.22em;text-transform:uppercase;display:inline-block;margin-bottom:20px;padding:4px 14px;border-radius:100px}
+    .silver .p-tag{background:rgba(148,163,184,.1);color:var(--silver)}
+    .onco .p-tag{background:rgba(110,170,114,.1);color:var(--green)}
+    .mama .p-tag{background:rgba(201,123,144,.1);color:var(--rose)}
+    .kids .p-tag{background:rgba(212,160,60,.1);color:var(--amber)}
+
+    .p-ring{width:72px;height:72px;border-radius:50%;margin:0 auto 20px;display:grid;place-items:center;position:relative}
+    .p-ring::before{content:'';position:absolute;inset:0;border-radius:50%;padding:1px;-webkit-mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);-webkit-mask-composite:xor;mask-composite:exclude}
+    .silver .p-ring::before{background:linear-gradient(135deg,var(--silver),transparent)}
+    .onco .p-ring::before{background:linear-gradient(135deg,var(--green),transparent)}
+    .mama .p-ring::before{background:linear-gradient(135deg,var(--rose),transparent)}
+    .kids .p-ring::before{background:linear-gradient(135deg,var(--amber),transparent)}
+    .p-ring svg{width:28px;height:28px;fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+    .silver .p-ring svg{stroke:var(--silver)}.onco .p-ring svg{stroke:var(--green)}.mama .p-ring svg{stroke:var(--rose)}.kids .p-ring svg{stroke:var(--amber)}
+
+    .p-name{font-family:var(--serif);font-size:1.2rem;font-weight:700;margin-bottom:4px}
+    .p-target{font-size:.7rem;color:var(--t3);margin-bottom:24px}
+    .p-nuts{list-style:none;text-align:left;margin-bottom:20px}
+    .p-nuts li{font-size:.75rem;padding:7px 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;color:var(--t3)}
+    .p-nuts li span:last-child{font-weight:600;color:var(--t1)}
+    .p-flav{font-size:.65rem;color:var(--t4);padding:10px 14px;border-radius:8px;background:var(--surface);border:1px solid var(--border)}
+
+    /* ═══ SCIENCE ═══ */
+    .sci{position:relative}
+    .sci::before{content:'';position:absolute;top:0;left:10%;right:10%;height:1px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+    .sci-bento{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:auto auto;gap:1px;margin-top:72px;background:var(--border);border-radius:16px;overflow:hidden}
+    .sci-card{background:var(--bg2);padding:44px 36px;transition:background .5s}
+    .sci-card:hover{background:var(--bg3)}
+    .grade{font-size:.55rem;font-weight:700;padding:4px 14px;border-radius:100px;display:inline-block;margin-bottom:18px;letter-spacing:.1em;text-transform:uppercase}
+    .ga{background:rgba(110,170,114,.1);color:var(--green)}.gb{background:rgba(148,163,184,.1);color:var(--silver)}
+    .sci-card h4{font-family:var(--serif);font-size:1rem;font-weight:500;margin-bottom:10px;line-height:1.5}
+    .sci-card p{font-size:.8rem;color:var(--t3);line-height:1.9}
+    .sci-ref{font-size:.6rem;color:var(--t4);margin-top:18px;padding-top:14px;border-top:1px solid var(--border);font-style:italic}
+
+    /* ═══ ADVISOR ═══ */
+    .adv-inner{display:grid;grid-template-columns:.7fr 1.3fr;gap:clamp(48px,8vw,120px);align-items:center}
+    .adv-img{aspect-ratio:3/4;border-radius:16px;background:linear-gradient(160deg,#E8E2DA,#D4CFC5);display:grid;place-items:center}
+    .adv-img-ph{text-align:center;color:#B5AFA7}
+    .adv-img-ph svg{width:56px;height:56px;stroke:#C4BDB3;fill:none;stroke-width:1;display:block;margin:0 auto 12px}
+    .adv-img-ph p{font-size:.72rem}
+    .adv-creds{display:flex;flex-wrap:wrap;gap:8px;margin-bottom:28px}
+    .cred{font-size:.6rem;font-weight:600;padding:5px 14px;border-radius:100px;background:rgba(160,116,80,.07);color:var(--gold-d);letter-spacing:.06em;border:1px solid rgba(160,116,80,.1)}
+    .adv-name{font-family:var(--serif);font-size:1.8rem;font-weight:700;margin-bottom:8px;color:#1A1A1A}
+    .adv-role{font-size:.82rem;color:#8A857E;margin-bottom:32px}
+    .adv-q{font-family:var(--serif);font-size:1.1rem;line-height:2.2;color:#2A2A2A;margin-bottom:32px;padding-left:20px;border-left:2px solid var(--gold)}
+    .adv-bio{font-size:.82rem;color:#8A857E;line-height:2}
+
+    /* ═══ COMPARISON ═══ */
+    .cmp-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:1px;margin-top:64px;background:#E0DAD0;border-radius:16px;overflow:hidden}
+    .cmp-col{background:#fff;padding:32px 20px;text-align:center}
+    .cmp-col.head{background:var(--cream,#F5F0E8)}
+    .cmp-col.hl{background:rgba(196,154,108,.04)}
+    .cmp-col.head.hl{background:rgba(196,154,108,.1)}
+    .cmp-brand{font-family:var(--serif);font-size:.82rem;font-weight:600;margin-bottom:20px;color:#1A1A1A;min-height:36px;display:flex;align-items:center;justify-content:center}
+    .cmp-col.hl .cmp-brand{color:var(--gold-d)}
+    .cmp-row{padding:10px 0;border-bottom:1px solid #F0EBE4;font-size:.72rem;color:#8A857E;min-height:36px;display:flex;align-items:center;justify-content:center}
+    .cmp-row:last-child{border-bottom:none}
+    .cmp-yes{color:#5A9A5E;font-weight:600}.cmp-no{color:#D4D0CC}
+
+    /* ═══ ROADMAP ═══ */
+    .rm-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:1px;margin-top:72px;background:var(--border);border-radius:16px;overflow:hidden}
+    .rm-phase{background:var(--bg2);padding:40px 28px;transition:background .5s}
+    .rm-phase:hover{background:var(--bg3)}
+    .rm-n{width:32px;height:32px;border-radius:8px;background:var(--gold);color:var(--bg);font-weight:700;font-size:.78rem;display:grid;place-items:center;margin-bottom:20px}
+    .rm-phase h4{font-family:var(--serif);font-size:1rem;font-weight:500;margin-bottom:4px}
+    .rm-period{font-size:.6rem;color:var(--gold);font-weight:600;margin-bottom:16px;letter-spacing:.1em;text-transform:uppercase}
+    .rm-phase p{font-size:.75rem;color:var(--t3);line-height:1.9}
+
+    /* ═══ PARTNER ═══ */
+    .ptr-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;margin-top:64px}
+    .ptr-box{background:#fff;border-radius:16px;padding:44px 36px;border:1px solid #E8E2DA}
+    .ptr-box h4{font-family:var(--serif);font-size:1.05rem;font-weight:600;margin-bottom:28px;padding-bottom:16px;border-bottom:2px solid var(--gold);color:#1A1A1A}
+    .ptr-list{list-style:none}
+    .ptr-list li{font-size:.82rem;padding:12px 0;border-bottom:1px solid #F0EBE4;display:flex;gap:14px;align-items:flex-start;line-height:1.7;color:#5A5550}
+    .ptr-list li::before{content:'';width:5px;height:5px;border-radius:50%;background:var(--gold);flex-shrink:0;margin-top:9px}
+
+    /* ═══ CTA ═══ */
+    .cta{padding:clamp(100px,14vw,200px) 0;text-align:center;position:relative;overflow:hidden}
+    .cta-orb{position:absolute;border-radius:50%;filter:blur(120px);pointer-events:none}
+    .cta-o1{width:500px;height:500px;background:radial-gradient(circle,rgba(196,154,108,.08),transparent 70%);top:-20%;right:10%}
+    .cta-o2{width:400px;height:400px;background:radial-gradient(circle,rgba(148,163,184,.05),transparent 70%);bottom:-20%;left:10%}
+    .cta-inner{position:relative;z-index:1;max-width:640px;margin:0 auto}
+    .cta h2{font-family:var(--serif);font-size:clamp(1.6rem,3.2vw,2.6rem);font-weight:700;margin-bottom:20px;line-height:1.4}
+    .cta-p{color:var(--t3);font-size:.92rem;line-height:2.2;font-weight:300;margin-bottom:56px}
+    .cta-duo{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--border);border-radius:16px;overflow:hidden}
+    .cta-box{background:var(--bg2);padding:44px 32px;text-align:center;transition:background .5s}
+    .cta-box:hover{background:var(--bg3)}
+    .cta-ico{width:44px;height:44px;border-radius:12px;background:rgba(196,154,108,.06);border:1px solid rgba(196,154,108,.1);display:grid;place-items:center;margin:0 auto 18px}
+    .cta-ico svg{width:20px;height:20px;stroke:var(--gold);fill:none;stroke-width:1.5;stroke-linecap:round;stroke-linejoin:round}
+    .cta-box h3{font-family:var(--serif);font-size:1rem;font-weight:500;margin-bottom:8px}
+    .cta-box p{font-size:.75rem;color:var(--t3);line-height:1.8;margin-bottom:24px}
+    .btn-s{display:inline-flex;align-items:center;gap:8px;padding:11px 26px;border-radius:100px;font-size:.72rem;font-weight:500;text-decoration:none;transition:all .4s var(--ease);letter-spacing:.06em}
+    .btn-s-gold{background:var(--gold);color:var(--bg)}.btn-s-gold:hover{background:var(--gold-l);transform:translateY(-2px)}
+    .btn-s-ghost{border:1px solid var(--border);color:var(--t2)}.btn-s-ghost:hover{border-color:rgba(255,255,255,.25);color:var(--t1);transform:translateY(-2px)}
+
+    /* ═══ FOOTER ═══ */
+    footer{padding:44px 0;border-top:1px solid var(--border)}
+    .ft{max-width:1320px;margin:0 auto;padding:0 clamp(20px,4vw,64px);display:flex;justify-content:space-between;align-items:center}
+    .ft-logo{font-family:var(--serif);font-size:.85rem;color:var(--t3);letter-spacing:.08em}
+    .ft-copy{font-size:.6rem;color:var(--t4);letter-spacing:.06em}
+
+    /* ═══ RESPONSIVE ═══ */
+    @media(max-width:900px){
+      nav{display:none}
+      .prob-grid{grid-template-columns:1fr 1fr}
+      .ev-grid{grid-template-columns:1fr}
+      .why-top{grid-template-columns:1fr;gap:20px}
+      .lineup-scroll{gap:14px}
+      .p-card{min-width:280px}
+      .sci-bento{grid-template-columns:1fr}
+      .adv-inner{grid-template-columns:1fr;gap:40px}
+      .cmp-grid{grid-template-columns:1fr;gap:0}
+      .cmp-col{border-bottom:1px solid #E0DAD0}
+      .cmp-col .cmp-row{justify-content:space-between;text-align:left}
+      .rm-grid{grid-template-columns:1fr 1fr}
+      .ptr-grid{grid-template-columns:1fr}
+      .cta-duo{grid-template-columns:1fr}
+    }
+    @media(max-width:520px){
+      .hero{min-height:auto;padding:120px 0 72px}
+      .hero-btns{flex-direction:column;align-items:center}
+      .prob-grid,.rm-grid{grid-template-columns:1fr}
+      .cta h2{font-size:1.5rem}
     }
   </style>
 </head>
 <body>
 
-  <!-- Header -->
-  <header id="header">
-    <div class="header-inner">
-      <a href="#" class="logo">ひとくち<span>処方</span></a>
-      <nav>
-        <a href="#problem">Problem</a>
-        <a href="#lineup">Products</a>
-        <a href="#science">Evidence</a>
-        <a href="#roadmap">Roadmap</a>
-        <a href="#contact" class="nav-cta">Contact</a>
-      </nav>
-    </div>
-  </header>
+<header id="hd">
+  <div class="h-inner">
+    <a href="#" class="logo">ひとくち<b>処方</b></a>
+    <nav>
+      <a href="#problem">Problem</a>
+      <a href="#lineup">Products</a>
+      <a href="#science">Evidence</a>
+      <a href="#roadmap">Roadmap</a>
+      <a href="#contact" class="nav-cta">Contact</a>
+    </nav>
+  </div>
+</header>
 
-  <!-- Hero -->
-  <section class="hero">
-    <div class="hero-bg">
-      <div class="hero-orb hero-orb-1"></div>
-      <div class="hero-orb hero-orb-2"></div>
-      <div class="hero-orb hero-orb-3"></div>
+<!-- ═══ HERO ═══ -->
+<section class="hero">
+  <div class="hero-mesh"><span class="m1"></span><span class="m2"></span><span class="m3"></span></div>
+  <div class="hero-c">
+    <p class="hero-ey">Physician-Designed Functional Ice Cream</p>
+    <h1>食べたいのに、<br><i>食べられない</i>を<br>ひとくちで解決する</h1>
+    <p class="hero-p">サルコペニア予防、化学療法中の栄養補給、つわり中の栄養摂取、お子さまの偏食対策。医師が設計した「ひとくち」で、必要な栄養を届けます。</p>
+    <div class="hero-btns">
+      <a href="#contact" class="btn btn-gold">協業のご相談</a>
+      <a href="#lineup" class="btn btn-ghost">製品を見る</a>
     </div>
-    <div class="hero-content">
-      <div class="hero-eyebrow">Physician-Designed Functional Ice Cream</div>
-      <h1>食べたいのに、<br><span class="gradient-text">食べられない</span>を<br>ひとくちで解決する</h1>
-      <p class="hero-sub">
-        サルコペニア予防、化学療法中の栄養補給、つわり中の栄養摂取、お子さまの偏食対策。
-        医師が設計した「ひとくち」で、必要な栄養を届けます。
-      </p>
-      <div class="hero-cta-group">
-        <a href="#contact" class="btn-primary">協業のご相談 &rarr;</a>
-        <a href="#lineup" class="btn-ghost">製品を見る</a>
+  </div>
+  <div class="scroll-cue"><span>Scroll</span><div class="scroll-line"></div></div>
+</section>
+
+<!-- ═══ MARQUEE ═══ -->
+<div class="marquee">
+  <div class="marquee-track">
+    <span class="marquee-item"><span class="marquee-dot"></span>ESPEN Guidelines</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Cochrane Review</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>MASCC/ISOO Grade A</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>嚥下調整食学会分類 2021</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>13 Evidence-Based Papers</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>4 Life-Stage Formulations</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>1,000万+ Target Population</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Morinaga Partnership</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>ESPEN Guidelines</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Cochrane Review</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>MASCC/ISOO Grade A</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>嚥下調整食学会分類 2021</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>13 Evidence-Based Papers</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>4 Life-Stage Formulations</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>1,000万+ Target Population</span>
+    <span class="marquee-item"><span class="marquee-dot"></span>Morinaga Partnership</span>
+  </div>
+</div>
+
+<!-- ═══ PROBLEM ═══ -->
+<section class="sec" id="problem">
+  <div class="w">
+    <div class="reveal">
+      <p class="ey ey-gold">The Problem</p>
+      <h2 class="sh">「食べられない」は、<br>想像以上に深刻な問題です</h2>
+      <p class="sp sp-dim">高齢者の食欲低下、がん治療の副作用、つわり、子どもの偏食。原因はさまざまでも、「必要な栄養が摂れない」という結果は同じです。</p>
+    </div>
+    <div class="prob-grid">
+      <div class="prob-card reveal d1">
+        <div class="prob-ico"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+        <h4>フレイル・サルコペニア</h4>
+        <span class="prob-n">400-700万人</span>
+        <span class="prob-u">食欲低下・嚥下困難による低栄養</span>
+      </div>
+      <div class="prob-card reveal d2">
+        <div class="prob-ico"><svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+        <h4>がん化学療法中</h4>
+        <span class="prob-n">30-56万人/年</span>
+        <span class="prob-u">悪心・味覚障害による食欲不振</span>
+      </div>
+      <div class="prob-card reveal d3">
+        <div class="prob-ico"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+        <h4>つわり中の妊婦</h4>
+        <span class="prob-n">25-64万人</span>
+        <span class="prob-u">匂い過敏・食欲消失</span>
+      </div>
+      <div class="prob-card reveal d4">
+        <div class="prob-ico"><svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg></div>
+        <h4>偏食・少食の子ども</h4>
+        <span class="prob-n">600-900万人</span>
+        <span class="prob-u">感覚過敏・栄養素の不足</span>
       </div>
     </div>
-    <div class="scroll-indicator">
-      <span>Scroll</span>
-      <div class="scroll-line"></div>
-    </div>
-  </section>
+  </div>
+</section>
 
-  <!-- Metrics -->
-  <section class="metrics">
-    <div class="container">
-      <div class="metrics-inner">
-        <div class="metric reveal">
-          <span class="metric-value">1,000万+</span>
-          <span class="metric-label">対象患者数</span>
-        </div>
-        <div class="metric reveal reveal-d1">
-          <span class="metric-value">4</span>
-          <span class="metric-label">ライフステージ別シリーズ</span>
-        </div>
-        <div class="metric reveal reveal-d2">
-          <span class="metric-value">13</span>
-          <span class="metric-label">エビデンス論文</span>
-        </div>
-        <div class="metric reveal reveal-d3">
-          <span class="metric-value">Grade A</span>
-          <span class="metric-label">推奨グレード</span>
-        </div>
+<!-- ═══ WHY ICE ═══ -->
+<section class="sec sec-cream" id="why-ice">
+  <div class="w">
+    <div class="why-top reveal">
+      <div>
+        <p class="ey ey-dark">Why Ice Cream?</p>
+        <h2 class="sh">なぜ「アイス」なのか</h2>
+      </div>
+      <p class="sp sp-muted" style="margin-bottom:0">アイスクリームは単なる嗜好品ではありません。嚥下困難者への有用性、化学療法中の口腔保護効果など、複数のエビデンスに裏付けられた合理的な選択です。</p>
+    </div>
+    <div class="ev-grid">
+      <div class="ev-card reveal d1">
+        <span class="ev-tag">Dysphagia Rehab</span>
+        <h4>口腔内で融解し、安全に嚥下できる</h4>
+        <p>アイスは体温で融解し、嚥下調整食コード1j〜2-1相当の性状に変化。嚥下困難者にも安全に栄養を届けられます。</p>
+        <p class="ev-src">日本摂食嚥下リハビリテーション学会 嚥下調整食学会分類2021</p>
+      </div>
+      <div class="ev-card reveal d2">
+        <span class="ev-tag">Oral Cryotherapy</span>
+        <h4>化学療法中の口腔粘膜炎リスクを低減</h4>
+        <p>冷却による局所血管収縮が口腔粘膜への薬剤暴露を抑制。粘膜炎リスクを有意に低減（RR 0.56）します。</p>
+        <p class="ev-src">Cochrane Review / MASCC/ISOO 2019 推奨グレードA</p>
+      </div>
+      <div class="ev-card reveal d3">
+        <span class="ev-tag">Salivary Stimulation</span>
+        <h4>冷感刺激が嚥下反射を改善する</h4>
+        <p>10&#8451;以下の冷感刺激は三叉神経-迷走神経反射を介して唾液分泌を促進し、嚥下反射の潜時を短縮します。</p>
+        <p class="ev-src">Logemann JA. (1995) / Rosenbek JC. et al. (1996)</p>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- Problem -->
-  <section class="section-dark section-pad" id="problem">
-    <div class="container">
+<!-- ═══ LINEUP ═══ -->
+<section class="sec" id="lineup">
+  <div class="w">
+    <div class="lineup-h reveal">
+      <p class="ey ey-gold">Product Lineup</p>
+      <h2 class="sh">4つのライフステージに、4つの処方を</h2>
+      <p class="sp sp-dim" style="margin:0 auto">同じ「アイス」という形態で、セグメント別に最適化された栄養設計。製造ラインを共通化しながら、中の栄養素だけを変えます。</p>
+    </div>
+    <div class="lineup-scroll reveal">
+      <div class="p-card silver">
+        <span class="p-tag">Silver</span>
+        <div class="p-ring"><svg viewBox="0 0 24 24"><path d="M17 18a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V6a6 6 0 0 1 6-6v0a6 6 0 0 1 6 6"/><path d="M9 12h6M9 8h6"/></svg></div>
+        <h3 class="p-name">Silver</h3>
+        <p class="p-target">サルコペニア予防 / 高齢者</p>
+        <ul class="p-nuts">
+          <li><span>エネルギー</span><span>200 kcal</span></li>
+          <li><span>タンパク質</span><span>15g</span></li>
+          <li><span>ロイシン</span><span>2.5g</span></li>
+          <li><span>ビタミンD</span><span>500 IU</span></li>
+          <li><span>Eルチン</span><span>150mg</span></li>
+          <li><span>HMB</span><span>0.75g</span></li>
+        </ul>
+        <p class="p-flav">なめらかジェラート / 抹茶・きなこ・黒ごま</p>
+      </div>
+      <div class="p-card onco">
+        <span class="p-tag">Onco</span>
+        <div class="p-ring"><svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg></div>
+        <h3 class="p-name">Onco</h3>
+        <p class="p-target">化学療法中 / がん患者</p>
+        <ul class="p-nuts">
+          <li><span>エネルギー</span><span>230 kcal</span></li>
+          <li><span>タンパク質</span><span>13g</span></li>
+          <li><span>EPA</span><span>1.5g</span></li>
+          <li><span>亜鉛</span><span>4.5mg</span></li>
+          <li><span>ビタミンC</span><span>120mg</span></li>
+          <li><span>グルタミン</span><span>2.5g</span></li>
+        </ul>
+        <p class="p-flav">さっぱり系 / レモン・ミント・ゆず</p>
+      </div>
+      <div class="p-card mama">
+        <span class="p-tag">Mama</span>
+        <div class="p-ring"><svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg></div>
+        <h3 class="p-name">Mama</h3>
+        <p class="p-target">つわり中 / 妊婦</p>
+        <ul class="p-nuts">
+          <li><span>エネルギー</span><span>160 kcal</span></li>
+          <li><span>タンパク質</span><span>10g</span></li>
+          <li><span>葉酸</span><span>200&micro;g</span></li>
+          <li><span>鉄</span><span>4mg</span></li>
+          <li><span>ビタミンB6</span><span>1.3mg</span></li>
+          <li><span>DHA</span><span>250mg</span></li>
+        </ul>
+        <p class="p-flav">シャーベット系 / グレープフルーツ・梅・レモン</p>
+      </div>
+      <div class="p-card kids">
+        <span class="p-tag">Kids</span>
+        <div class="p-ring"><svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg></div>
+        <h3 class="p-name">Kids</h3>
+        <p class="p-target">偏食・少食 / 子ども</p>
+        <ul class="p-nuts">
+          <li><span>エネルギー</span><span>120 kcal</span></li>
+          <li><span>タンパク質</span><span>7g</span></li>
+          <li><span>カルシウム</span><span>200mg</span></li>
+          <li><span>鉄</span><span>2.5mg</span></li>
+          <li><span>亜鉛</span><span>2.5mg</span></li>
+          <li><span>ビタミンD</span><span>200 IU</span></li>
+        </ul>
+        <p class="p-flav">クリーミー / チョコ・バニラ・いちご（80ml）</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ SCIENCE ═══ -->
+<section class="sec sci" id="science">
+  <div class="w">
+    <div class="reveal">
+      <p class="ey ey-gold">Evidence</p>
+      <h2 class="sh">13本のエビデンス論文に基づく<br>栄養設計</h2>
+      <p class="sp sp-dim">すべての栄養素と含有量は、国際的なガイドラインと査読付き論文のエビデンスに基づいて設計されています。</p>
+    </div>
+    <div class="sci-bento">
+      <div class="sci-card reveal d1">
+        <span class="grade ga">Grade A</span>
+        <h4>Oral Cryotherapy による口腔粘膜炎予防</h4>
+        <p>冷却が化学療法中の口腔粘膜炎発症リスクを有意に低減。アイスの冷却効果がそのまま治療補助に。</p>
+        <p class="sci-ref">Worthington HV. et al. (2011) Cochrane Review / MASCC/ISOO 2019</p>
+      </div>
+      <div class="sci-card reveal d2">
+        <span class="grade ga">Grade A</span>
+        <h4>高齢者のタンパク質摂取量 1.0-1.2g/kg/日</h4>
+        <p>PROT-AGE Study Groupによる系統的レビュー。筋タンパク質合成に必要な1食あたり15-20gを本製品でカバー。</p>
+        <p class="sci-ref">Bauer J. et al. (2013) JAMDA / Deutz NE. et al. (2014) ESPEN</p>
+      </div>
+      <div class="sci-card reveal d3">
+        <span class="grade ga">Grade A</span>
+        <h4>葉酸による神経管閉鎖障害の予防</h4>
+        <p>サプリメント由来の葉酸400&micro;g/日でNTD再発率72%低下。Mama 1個で200&micro;gをカバー。</p>
+        <p class="sci-ref">MRC Vitamin Study (1991) Lancet / Berry et al. (1999) NEJM</p>
+      </div>
+      <div class="sci-card reveal d4">
+        <span class="grade gb">Evidence B</span>
+        <h4>ロイシン閾値とmTORC1活性化</h4>
+        <p>1食あたり2.5-3.0gのロイシンが筋タンパク質合成のmTORC1経路を活性化。Silver に2.5g配合。</p>
+        <p class="sci-ref">Churchward-Venne TA. et al. (2012) AJCN</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ADVISOR ═══ -->
+<section class="sec sec-cream" id="advisor">
+  <div class="w">
+    <div class="adv-inner">
+      <div class="adv-img reveal">
+        <div class="adv-img-ph">
+          <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
+          <p>Photo</p>
+        </div>
+      </div>
       <div class="reveal">
-        <div class="eyebrow dark-eyebrow">The Problem</div>
-        <h2 class="section-heading">「食べられない」は、<br>想像以上に深刻な問題です</h2>
-        <p class="section-lead dark-lead">
-          高齢者の食欲低下、がん治療の副作用、つわり、子どもの偏食。<br>
-          原因はさまざまでも、「必要な栄養が摂れない」という結果は同じです。
-        </p>
+        <p class="ey ey-dark">Medical Advisor</p>
+        <div class="adv-creds">
+          <span class="cred">小児科専門医</span>
+          <span class="cred">医学博士</span>
+          <span class="cred">栄養設計</span>
+        </div>
+        <h3 class="adv-name">岡本 賢</h3>
+        <p class="adv-role">小児科医 / ひとくち処方 開発者</p>
+        <blockquote class="adv-q">「食べられない」は、患者さんの人生の質を大きく左右します。臨床の現場で何度も目にしてきたこの課題を、おいしく、科学的に、ひとくちで解決したい。</blockquote>
+        <p class="adv-bio">愛育病院 小児科医。日々の臨床で、偏食の子どもや食欲不振の患者に向き合う中で、「おいしく栄養を届ける」方法の不在に課題を感じ、ひとくち処方を構想。医学的エビデンスに基づいた栄養設計と、誰もが手に取りたくなるプロダクトデザインの融合を目指しています。</p>
       </div>
-      <div class="problem-grid">
-        <div class="problem-card reveal reveal-d1">
-          <div class="problem-icon-wrap">
-            <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-          </div>
-          <h4>フレイル・サルコペニア</h4>
-          <span class="problem-num">400-700万人</span>
-          <span class="problem-unit">食欲低下・嚥下困難による低栄養</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ COMPARISON ═══ -->
+<section class="sec sec-cream" id="comparison" style="padding-top:0">
+  <div class="w">
+    <div class="reveal">
+      <p class="ey ey-dark">Comparison</p>
+      <h2 class="sh">既存製品との違い</h2>
+      <p class="sp sp-muted">「医師が設計」「ライフステージ別」「おいしさ」の3つを同時に満たす製品は、まだ存在しません。</p>
+    </div>
+    <div class="cmp-grid reveal">
+      <div class="cmp-col head"><div class="cmp-brand" style="visibility:hidden">_</div><div class="cmp-row">医師監修</div><div class="cmp-row">ライフステージ別</div><div class="cmp-row">嗜好性</div><div class="cmp-row">臨床エビデンス</div><div class="cmp-row">Eルチン配合</div><div class="cmp-row">一般流通</div></div>
+      <div class="cmp-col hl"><div class="cmp-brand">ひとくち処方</div><div class="cmp-row"><span class="cmp-yes">Yes</span></div><div class="cmp-row"><span class="cmp-yes">4 Series</span></div><div class="cmp-row"><span class="cmp-yes">Ice Cream</span></div><div class="cmp-row"><span class="cmp-yes">13 Papers</span></div><div class="cmp-row"><span class="cmp-yes">Yes</span></div><div class="cmp-row"><span class="cmp-yes">Morinaga</span></div></div>
+      <div class="cmp-col"><div class="cmp-brand">LacuS Me ICE</div><div class="cmp-row"><span class="cmp-no">-</span></div><div class="cmp-row">Senior only</div><div class="cmp-row"><span class="cmp-yes">Ice Cream</span></div><div class="cmp-row">Limited</div><div class="cmp-row"><span class="cmp-no">-</span></div><div class="cmp-row">Facilities</div></div>
+      <div class="cmp-col"><div class="cmp-brand">明治メイバランス</div><div class="cmp-row"><span class="cmp-no">-</span></div><div class="cmp-row">Medical only</div><div class="cmp-row">Clinical taste</div><div class="cmp-row"><span class="cmp-yes">Yes</span></div><div class="cmp-row"><span class="cmp-no">-</span></div><div class="cmp-row">Hospitals</div></div>
+      <div class="cmp-col"><div class="cmp-brand">BASE FOOD</div><div class="cmp-row"><span class="cmp-no">-</span></div><div class="cmp-row">General</div><div class="cmp-row">Bread</div><div class="cmp-row">Limited</div><div class="cmp-row"><span class="cmp-no">-</span></div><div class="cmp-row"><span class="cmp-yes">Yes</span></div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ ROADMAP ═══ -->
+<section class="sec" id="roadmap">
+  <div class="w">
+    <div class="reveal">
+      <p class="ey ey-gold">Roadmap</p>
+      <h2 class="sh">実行計画</h2>
+      <p class="sp sp-dim">小さく始めて、エビデンスで拡大する。</p>
+    </div>
+    <div class="rm-grid">
+      <div class="rm-phase reveal d1">
+        <div class="rm-n">1</div>
+        <h4>臨床実証</h4>
+        <p class="rm-period">0 - 6 Months</p>
+        <p>OEM試作品製造。勤務先病院で試食調査（n=50-100）。初期データ取得。森永へアプローチ開始。</p>
+      </div>
+      <div class="rm-phase reveal d2">
+        <div class="rm-n">2</div>
+        <h4>製品化・初期販売</h4>
+        <p class="rm-period">6 - 12 Months</p>
+        <p>Silver先行発売。クリニコ営業網 + Amazon/楽天でD2C。アプリMVP開発。メディア露出。</p>
+      </div>
+      <div class="rm-phase reveal d3">
+        <div class="rm-n">3</div>
+        <h4>全ライン展開</h4>
+        <p class="rm-period">12 - 24 Months</p>
+        <p>Onco/Mama/Kids順次発売。港区フレイル予防モデル事業に共同提案。臨床データ論文化。</p>
+      </div>
+      <div class="rm-phase reveal d4">
+        <div class="rm-n">4</div>
+        <h4>全国スケール</h4>
+        <p class="rm-period">24 - 36 Months</p>
+        <p>100自治体展開。年商10億円。inブランドとの正式コラボ。海外展開調査。</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ PARTNER ═══ -->
+<section class="sec sec-cream" id="partner">
+  <div class="w">
+    <div class="reveal">
+      <p class="ey ey-dark">Partnership</p>
+      <h2 class="sh">森永グループとの協業で<br>実現する世界</h2>
+      <p class="sp sp-muted">互いに「持っていないもの」を補完し合う、理想的なパートナーシップ。</p>
+    </div>
+    <div class="ptr-grid">
+      <div class="ptr-box reveal d1">
+        <h4>岡本先生が提供するもの</h4>
+        <ul class="ptr-list">
+          <li>医師としての栄養処方設計力（全セグメント対応）</li>
+          <li>臨床フィールド（勤務先病院での効果検証）</li>
+          <li>「医師監修」ブランドの信頼性</li>
+          <li>アプリ開発力（タンパク質トラッカー等）</li>
+          <li>自治体連携の経験（sukusuku-navi実績）</li>
+        </ul>
+      </div>
+      <div class="ptr-box reveal d2">
+        <h4>森永グループが提供するもの</h4>
+        <ul class="ptr-list">
+          <li>アイスクリーム製造ライン（年間700-800億円規模の事業基盤）</li>
+          <li>Eルチン（酵素処理ルチン）の独占的特許成分</li>
+          <li>全国流通網（コンビニ・スーパー・ドラッグストア）</li>
+          <li>クリニコの病院・介護施設営業網（全国カバー）</li>
+          <li>「森永」ブランドの信用力と資金力</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ CTA ═══ -->
+<section class="cta" id="contact">
+  <div class="cta-orb cta-o1"></div>
+  <div class="cta-orb cta-o2"></div>
+  <div class="w">
+    <div class="cta-inner reveal">
+      <p class="ey ey-gold" style="justify-content:center">Get Started</p>
+      <h2>「食べられない」を、<br>一緒に解決しませんか</h2>
+      <p class="cta-p">製造パートナー、自治体、医療機関との連携を歓迎します。まずはお気軽にご連絡ください。</p>
+      <div class="cta-duo">
+        <div class="cta-box">
+          <div class="cta-ico"><svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+          <h3>医療関係者・企業の方</h3>
+          <p>協業提案、OEM製造、臨床研究の連携について</p>
+          <a href="mailto:contact@hitokuchi-shohou.jp" class="btn-s btn-s-gold">お問い合わせ</a>
         </div>
-        <div class="problem-card reveal reveal-d2">
-          <div class="problem-icon-wrap">
-            <svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-          </div>
-          <h4>がん化学療法中</h4>
-          <span class="problem-num">30-56万人/年</span>
-          <span class="problem-unit">悪心・味覚障害による食欲不振</span>
-        </div>
-        <div class="problem-card reveal reveal-d3">
-          <div class="problem-icon-wrap">
-            <svg viewBox="0 0 24 24"><path d="M12 2a7 7 0 0 0-7 7c0 5 7 13 7 13s7-8 7-13a7 7 0 0 0-7-7z"/></svg>
-          </div>
-          <h4>つわり中の妊婦</h4>
-          <span class="problem-num">25-64万人</span>
-          <span class="problem-unit">匂い過敏・食欲消失</span>
-        </div>
-        <div class="problem-card reveal reveal-d4">
-          <div class="problem-icon-wrap">
-            <svg viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
-          </div>
-          <h4>偏食・少食の子ども</h4>
-          <span class="problem-num">600-900万人</span>
-          <span class="problem-unit">感覚過敏・栄養素の不足</span>
+        <div class="cta-box">
+          <div class="cta-ico"><svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg></div>
+          <h3>患者さん・ご家族の方</h3>
+          <p>製品の先行案内、モニター募集のご登録</p>
+          <a href="#" class="btn-s btn-s-ghost">事前登録する</a>
         </div>
       </div>
     </div>
-  </section>
+  </div>
+</section>
 
-  <!-- Why Ice Cream -->
-  <section class="section-cream section-pad" id="why-ice">
-    <div class="container">
-      <div class="why-header reveal">
-        <div>
-          <div class="eyebrow cream-eyebrow">Why Ice Cream?</div>
-          <h2 class="section-heading">なぜ「アイス」なのか</h2>
-        </div>
-        <div>
-          <p class="section-lead cream-lead" style="margin-bottom: 0;">
-            アイスクリームは単なる嗜好品ではありません。
-            嚥下困難者への有用性、化学療法中の口腔保護効果など、
-            複数のエビデンスに裏付けられた合理的な選択です。
-          </p>
-        </div>
-      </div>
-      <div class="evidence-grid">
-        <div class="evidence-card reveal reveal-d1">
-          <span class="ev-tag">Dysphagia Rehab</span>
-          <h4>口腔内で融解し、安全に嚥下できる</h4>
-          <p>アイスは体温で融解し、嚥下調整食コード1j〜2-1相当の性状に変化。嚥下困難者にも安全に栄養を届けられます。</p>
-          <p class="ev-source">日本摂食嚥下リハビリテーション学会 嚥下調整食学会分類2021</p>
-        </div>
-        <div class="evidence-card reveal reveal-d2">
-          <span class="ev-tag">Oral Cryotherapy</span>
-          <h4>化学療法中の口腔粘膜炎リスクを低減</h4>
-          <p>冷却による局所血管収縮が口腔粘膜への薬剤暴露を抑制。粘膜炎リスクを有意に低減（RR 0.56）します。</p>
-          <p class="ev-source">Cochrane Review / MASCC/ISOO 2019 推奨グレードA</p>
-        </div>
-        <div class="evidence-card reveal reveal-d3">
-          <span class="ev-tag">Salivary Stimulation</span>
-          <h4>冷感刺激が嚥下反射を改善する</h4>
-          <p>10&#8451;以下の冷感刺激は三叉神経-迷走神経反射を介して唾液分泌を促進し、嚥下反射の潜時を短縮します。</p>
-          <p class="ev-source">Logemann JA. (1995) / Rosenbek JC. et al. (1996)</p>
-        </div>
-      </div>
-    </div>
-  </section>
+<footer>
+  <div class="ft">
+    <span class="ft-logo">ひとくち処方</span>
+    <span class="ft-copy">&copy; 2026 Hitokuchi Shohou</span>
+  </div>
+</footer>
 
-  <!-- Product Lineup -->
-  <section class="section-dark section-pad" id="lineup">
-    <div class="container">
-      <div class="lineup-header reveal">
-        <div class="eyebrow dark-eyebrow">Product Lineup</div>
-        <h2 class="section-heading">4つのライフステージに、<br>4つの処方を</h2>
-        <p class="section-lead dark-lead">
-          同じ「アイス」という形態で、セグメント別に最適化された栄養設計。<br>
-          製造ラインを共通化しながら、中の栄養素だけを変えます。
-        </p>
-      </div>
-      <div class="lineup-grid">
-        <div class="product-card silver reveal reveal-d1">
-          <span class="product-line-tag">Silver</span>
-          <div class="product-icon">
-            <svg viewBox="0 0 24 24"><path d="M17 18a2 2 0 0 1-2 2H9a2 2 0 0 1-2-2V6a6 6 0 0 1 6-6v0a6 6 0 0 1 6 6v0"/><path d="M9 12h6"/><path d="M9 8h6"/></svg>
-          </div>
-          <h3 class="product-name">Silver</h3>
-          <p class="product-target">サルコペニア予防 / 高齢者</p>
-          <ul class="product-nutrients">
-            <li><span>エネルギー</span><span>200 kcal</span></li>
-            <li><span>タンパク質</span><span>15g</span></li>
-            <li><span>ロイシン</span><span>2.5g</span></li>
-            <li><span>ビタミンD</span><span>500 IU</span></li>
-            <li><span>Eルチン</span><span>150mg</span></li>
-            <li><span>HMB</span><span>0.75g</span></li>
-          </ul>
-          <p class="product-flavor">なめらかジェラート / 抹茶・きなこ・黒ごま</p>
-        </div>
-        <div class="product-card onco reveal reveal-d2">
-          <span class="product-line-tag">Onco</span>
-          <div class="product-icon">
-            <svg viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
-          </div>
-          <h3 class="product-name">Onco</h3>
-          <p class="product-target">化学療法中 / がん患者</p>
-          <ul class="product-nutrients">
-            <li><span>エネルギー</span><span>230 kcal</span></li>
-            <li><span>タンパク質</span><span>13g</span></li>
-            <li><span>EPA</span><span>1.5g</span></li>
-            <li><span>亜鉛</span><span>4.5mg</span></li>
-            <li><span>ビタミンC</span><span>120mg</span></li>
-            <li><span>グルタミン</span><span>2.5g</span></li>
-          </ul>
-          <p class="product-flavor">さっぱり系 / レモン・ミント・ゆず</p>
-        </div>
-        <div class="product-card mama reveal reveal-d3">
-          <span class="product-line-tag">Mama</span>
-          <div class="product-icon">
-            <svg viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 0 0-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 0 0-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 0 0 0-7.78z"/></svg>
-          </div>
-          <h3 class="product-name">Mama</h3>
-          <p class="product-target">つわり中 / 妊婦</p>
-          <ul class="product-nutrients">
-            <li><span>エネルギー</span><span>160 kcal</span></li>
-            <li><span>タンパク質</span><span>10g</span></li>
-            <li><span>葉酸</span><span>200&micro;g</span></li>
-            <li><span>鉄</span><span>4mg</span></li>
-            <li><span>ビタミンB6</span><span>1.3mg</span></li>
-            <li><span>DHA</span><span>250mg</span></li>
-          </ul>
-          <p class="product-flavor">シャーベット系 / グレープフルーツ・梅・レモン</p>
-        </div>
-        <div class="product-card kids reveal reveal-d4">
-          <span class="product-line-tag">Kids</span>
-          <div class="product-icon">
-            <svg viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
-          </div>
-          <h3 class="product-name">Kids</h3>
-          <p class="product-target">偏食・少食 / 子ども</p>
-          <ul class="product-nutrients">
-            <li><span>エネルギー</span><span>120 kcal</span></li>
-            <li><span>タンパク質</span><span>7g</span></li>
-            <li><span>カルシウム</span><span>200mg</span></li>
-            <li><span>鉄</span><span>2.5mg</span></li>
-            <li><span>亜鉛</span><span>2.5mg</span></li>
-            <li><span>ビタミンD</span><span>200 IU</span></li>
-          </ul>
-          <p class="product-flavor">クリーミー / チョコ・バニラ・いちご（80ml）</p>
-        </div>
-      </div>
-    </div>
-  </section>
+<script>
+const hd=document.getElementById('hd');
+window.addEventListener('scroll',()=>hd.classList.toggle('s',scrollY>40));
 
-  <!-- Science -->
-  <section class="section-dark-2 section-pad science" id="science">
-    <div class="container">
-      <div class="reveal">
-        <div class="eyebrow dark-eyebrow">Evidence</div>
-        <h2 class="section-heading">13本のエビデンス論文に基づく<br>栄養設計</h2>
-        <p class="section-lead dark-lead">
-          すべての栄養素と含有量は、国際的なガイドラインと<br>
-          査読付き論文のエビデンスに基づいて設計されています。
-        </p>
-      </div>
-      <div class="science-grid">
-        <div class="science-card reveal reveal-d1">
-          <span class="grade-badge grade-a">Grade A</span>
-          <h4>Oral Cryotherapy による口腔粘膜炎予防</h4>
-          <p>冷却が化学療法中の口腔粘膜炎発症リスクを有意に低減。アイスの冷却効果がそのまま治療補助に。</p>
-          <p class="science-ref">Worthington HV. et al. (2011) Cochrane Review / MASCC/ISOO 2019</p>
-        </div>
-        <div class="science-card reveal reveal-d2">
-          <span class="grade-badge grade-a">Grade A</span>
-          <h4>高齢者のタンパク質摂取量 1.0-1.2g/kg/日</h4>
-          <p>PROT-AGE Study Groupによる系統的レビュー。筋タンパク質合成に必要な1食あたり15-20gを本製品でカバー。</p>
-          <p class="science-ref">Bauer J. et al. (2013) JAMDA / Deutz NE. et al. (2014) ESPEN</p>
-        </div>
-        <div class="science-card reveal reveal-d3">
-          <span class="grade-badge grade-a">Grade A</span>
-          <h4>葉酸による神経管閉鎖障害の予防</h4>
-          <p>サプリメント由来の葉酸400&micro;g/日でNTD再発率72%低下。Mama 1個で200&micro;gをカバー。</p>
-          <p class="science-ref">MRC Vitamin Study (1991) Lancet / Berry et al. (1999) NEJM</p>
-        </div>
-        <div class="science-card reveal reveal-d4">
-          <span class="grade-badge grade-b">Evidence B</span>
-          <h4>ロイシン閾値とmTORC1活性化</h4>
-          <p>1食あたり2.5-3.0gのロイシンが筋タンパク質合成のmTORC1経路を活性化。Silver に2.5g配合。</p>
-          <p class="science-ref">Churchward-Venne TA. et al. (2012) AJCN</p>
-        </div>
-      </div>
-    </div>
-  </section>
+const io=new IntersectionObserver(e=>e.forEach(x=>{if(x.isIntersecting)x.target.classList.add('v')}),{threshold:.06,rootMargin:'0px 0px -50px 0px'});
+document.querySelectorAll('.reveal').forEach(e=>io.observe(e));
 
-  <!-- Advisor -->
-  <section class="section-cream section-pad" id="advisor">
-    <div class="container">
-      <div class="advisor-inner">
-        <div class="advisor-photo reveal">
-          <div class="advisor-photo-inner">
-            <svg viewBox="0 0 24 24" stroke-linecap="round" stroke-linejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-            <p>Photo Coming Soon</p>
-          </div>
-        </div>
-        <div class="reveal">
-          <div class="eyebrow cream-eyebrow">Medical Advisor</div>
-          <div class="advisor-creds">
-            <span class="cred-tag">小児科専門医</span>
-            <span class="cred-tag">医学博士</span>
-            <span class="cred-tag">栄養設計</span>
-          </div>
-          <h3 class="advisor-name">岡本 賢</h3>
-          <p class="advisor-title">小児科医 / ひとくち処方 開発者</p>
-          <blockquote class="advisor-quote">
-            「食べられない」は、患者さんの人生の質を大きく左右します。
-            臨床の現場で何度も目にしてきたこの課題を、
-            おいしく、科学的に、ひとくちで解決したい。
-          </blockquote>
-          <p class="advisor-bio">
-            愛育病院 小児科医。日々の臨床で、偏食の子どもや食欲不振の患者に向き合う中で、
-            「おいしく栄養を届ける」方法の不在に課題を感じ、ひとくち処方を構想。
-            医学的エビデンスに基づいた栄養設計と、誰もが手に取りたくなる
-            プロダクトデザインの融合を目指しています。
-          </p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Comparison -->
-  <section class="section-cream section-pad" id="comparison" style="padding-top: 0;">
-    <div class="container">
-      <div class="reveal">
-        <div class="eyebrow cream-eyebrow">Comparison</div>
-        <h2 class="section-heading">既存製品との違い</h2>
-        <p class="section-lead cream-lead">
-          「医師が設計」「ライフステージ別」「おいしさ」の3つを<br>
-          同時に満たす製品は、まだ存在しません。
-        </p>
-      </div>
-      <div class="comparison-wrap reveal">
-        <table class="comparison-table">
-          <thead>
-            <tr>
-              <th></th>
-              <th class="hl">ひとくち処方</th>
-              <th>LacuS Me ICE</th>
-              <th>明治メイバランス</th>
-              <th>pocotein</th>
-              <th>BASE FOOD</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr>
-              <td>医師監修</td>
-              <td class="hl"><span class="check">&#10004;</span></td>
-              <td><span class="cross">&mdash;</span></td>
-              <td><span class="cross">&mdash;</span></td>
-              <td><span class="cross">&mdash;</span></td>
-              <td><span class="cross">&mdash;</span></td>
-            </tr>
-            <tr>
-              <td>ライフステージ別</td>
-              <td class="hl"><span class="check">&#10004; 4シリーズ</span></td>
-              <td>シニアのみ</td>
-              <td>医療用のみ</td>
-              <td>子どものみ</td>
-              <td>汎用</td>
-            </tr>
-            <tr>
-              <td>嗜好性</td>
-              <td class="hl"><span class="check">&#10004;</span> アイス</td>
-              <td><span class="check">&#10004;</span> アイス</td>
-              <td>薬品感</td>
-              <td><span class="check">&#10004;</span> アイス</td>
-              <td>パン</td>
-            </tr>
-            <tr>
-              <td>臨床エビデンス</td>
-              <td class="hl"><span class="check">&#10004;</span> 13本</td>
-              <td>限定的</td>
-              <td><span class="check">&#10004;</span></td>
-              <td><span class="cross">&mdash;</span></td>
-              <td>限定的</td>
-            </tr>
-            <tr>
-              <td>Eルチン配合</td>
-              <td class="hl"><span class="check">&#10004;</span></td>
-              <td><span class="cross">&mdash;</span></td>
-              <td><span class="cross">&mdash;</span></td>
-              <td><span class="cross">&mdash;</span></td>
-              <td><span class="cross">&mdash;</span></td>
-            </tr>
-            <tr>
-              <td>一般流通</td>
-              <td class="hl"><span class="check">&#10004;</span> 森永連携</td>
-              <td>施設中心</td>
-              <td>医療機関</td>
-              <td>EC中心</td>
-              <td><span class="check">&#10004;</span></td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </div>
-  </section>
-
-  <!-- Roadmap -->
-  <section class="section-dark section-pad" id="roadmap">
-    <div class="container">
-      <div class="reveal">
-        <div class="eyebrow dark-eyebrow">Roadmap</div>
-        <h2 class="section-heading">実行計画</h2>
-        <p class="section-lead dark-lead">小さく始めて、エビデンスで拡大する。</p>
-      </div>
-      <div class="roadmap-timeline">
-        <div class="phase reveal reveal-d1">
-          <span class="phase-num">1</span>
-          <h4>臨床実証</h4>
-          <p class="phase-period">0-6 Months</p>
-          <p>OEM試作品製造。勤務先病院で試食調査（n=50-100）。初期データ取得。森永へアプローチ開始。</p>
-        </div>
-        <div class="phase reveal reveal-d2">
-          <span class="phase-num">2</span>
-          <h4>製品化・初期販売</h4>
-          <p class="phase-period">6-12 Months</p>
-          <p>Silver先行発売。クリニコ営業網 + Amazon/楽天でD2C。アプリMVP開発。メディア露出。</p>
-        </div>
-        <div class="phase reveal reveal-d3">
-          <span class="phase-num">3</span>
-          <h4>全ライン展開</h4>
-          <p class="phase-period">12-24 Months</p>
-          <p>Onco/Mama/Kids順次発売。港区フレイル予防モデル事業に共同提案。臨床データ論文化。</p>
-        </div>
-        <div class="phase reveal reveal-d4">
-          <span class="phase-num">4</span>
-          <h4>全国スケール</h4>
-          <p class="phase-period">24-36 Months</p>
-          <p>100自治体展開。年商10億円。inブランドとの正式コラボ。海外展開調査。</p>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Partnership -->
-  <section class="section-cream section-pad" id="partner">
-    <div class="container">
-      <div class="reveal">
-        <div class="eyebrow cream-eyebrow">Partnership</div>
-        <h2 class="section-heading">森永グループとの協業で<br>実現する世界</h2>
-        <p class="section-lead cream-lead">互いに「持っていないもの」を補完し合う、理想的なパートナーシップ。</p>
-      </div>
-      <div class="partner-grid">
-        <div class="partner-box reveal reveal-d1">
-          <h4>岡本先生が提供するもの</h4>
-          <ul class="partner-list">
-            <li>医師としての栄養処方設計力（全セグメント対応）</li>
-            <li>臨床フィールド（勤務先病院での効果検証）</li>
-            <li>「医師監修」ブランドの信頼性</li>
-            <li>アプリ開発力（タンパク質トラッカー等）</li>
-            <li>自治体連携の経験（sukusuku-navi実績）</li>
-          </ul>
-        </div>
-        <div class="partner-box reveal reveal-d2">
-          <h4>森永グループが提供するもの</h4>
-          <ul class="partner-list">
-            <li>アイスクリーム製造ライン（年間700-800億円規模の事業基盤）</li>
-            <li>Eルチン（酵素処理ルチン）の独占的特許成分</li>
-            <li>全国流通網（コンビニ・スーパー・ドラッグストア）</li>
-            <li>クリニコの病院・介護施設営業網（全国カバー）</li>
-            <li>「森永」ブランドの信用力と資金力</li>
-          </ul>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- CTA -->
-  <section class="section-dark cta" id="contact">
-    <div class="cta-bg-orb cta-bg-orb-1"></div>
-    <div class="cta-bg-orb cta-bg-orb-2"></div>
-    <div class="container">
-      <div class="cta-inner reveal">
-        <div class="eyebrow dark-eyebrow" style="justify-content: center;">Get Started</div>
-        <h2>「食べられない」を、<br>一緒に解決しませんか</h2>
-        <p class="cta-desc">
-          製造パートナー、自治体、医療機関との連携を歓迎します。<br>まずはお気軽にご連絡ください。
-        </p>
-        <div class="cta-cards">
-          <div class="cta-card">
-            <div class="cta-card-icon">
-              <svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>
-            </div>
-            <h3>医療関係者・企業の方</h3>
-            <p>協業提案、OEM製造、臨床研究の連携について</p>
-            <a href="mailto:contact@hitokuchi-shohou.jp" class="btn-sm btn-sm-gold">お問い合わせ &rarr;</a>
-          </div>
-          <div class="cta-card">
-            <div class="cta-card-icon">
-              <svg viewBox="0 0 24 24"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/></svg>
-            </div>
-            <h3>患者さん・ご家族の方</h3>
-            <p>製品の先行案内、モニター募集のご登録</p>
-            <a href="#" class="btn-sm btn-sm-ghost">事前登録する &rarr;</a>
-          </div>
-        </div>
-      </div>
-    </div>
-  </section>
-
-  <!-- Footer -->
-  <footer>
-    <div class="footer-inner">
-      <span class="footer-logo">ひとくち処方</span>
-      <span class="footer-copy">&copy; 2026 Hitokuchi Shohou. All rights reserved.</span>
-    </div>
-  </footer>
-
-  <script>
-    const header = document.getElementById('header');
-    let lastY = 0;
-    window.addEventListener('scroll', () => {
-      header.classList.toggle('scrolled', window.scrollY > 40);
-      lastY = window.scrollY;
-    });
-
-    const observer = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          entry.target.classList.add('visible');
-        }
-      });
-    }, { threshold: 0.08, rootMargin: '0px 0px -60px 0px' });
-
-    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
-
-    /* Counter animation for metrics */
-    const counterObserver = new IntersectionObserver((entries) => {
-      entries.forEach(entry => {
-        if (entry.isIntersecting) {
-          const el = entry.target;
-          const text = el.textContent;
-          const match = text.match(/^([\d,]+)/);
-          if (match) {
-            const target = parseInt(match[1].replace(/,/g, ''));
-            const suffix = text.replace(match[1], '');
-            let current = 0;
-            const duration = 1500;
-            const start = performance.now();
-            const step = (now) => {
-              const progress = Math.min((now - start) / duration, 1);
-              const eased = 1 - Math.pow(1 - progress, 3);
-              current = Math.floor(target * eased);
-              el.textContent = current.toLocaleString() + suffix;
-              if (progress < 1) requestAnimationFrame(step);
-            };
-            requestAnimationFrame(step);
-          }
-          counterObserver.unobserve(el);
-        }
-      });
-    }, { threshold: 0.5 });
-
-    document.querySelectorAll('.metric-value').forEach(el => counterObserver.observe(el));
-
-    /* Parallax orbs on mousemove */
-    document.addEventListener('mousemove', (e) => {
-      const x = (e.clientX / window.innerWidth - 0.5) * 20;
-      const y = (e.clientY / window.innerHeight - 0.5) * 20;
-      document.querySelectorAll('.hero-orb').forEach((orb, i) => {
-        const factor = (i + 1) * 0.4;
-        orb.style.transform = `translate(${x * factor}px, ${y * factor}px)`;
-      });
-    });
-  </script>
+document.addEventListener('mousemove',e=>{
+  const x=(e.clientX/innerWidth-.5)*15,y=(e.clientY/innerHeight-.5)*15;
+  document.querySelectorAll('.hero-mesh span').forEach((o,i)=>{
+    const f=(i+1)*.35;
+    o.style.transform=`translate(${x*f}px,${y*f}px)`;
+  });
+});
+</script>
 </body>
 </html>
